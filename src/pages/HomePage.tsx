@@ -12,7 +12,8 @@ import { useContent } from "../context/ContentContext";
 export function HomePage() {
   const { t, loc } = useLanguage();
   const { books, categories, showCategories } = useContent();
-  const featured = getFeaturedBooks(books);
+  const visibleBooks = books.filter((book) => book.visible !== false);
+  const featured = getFeaturedBooks(visibleBooks);
 
   const faq = [
     { id: "1", question: t("faq1q"), answer: t("faq1a") },
@@ -48,7 +49,7 @@ export function HomePage() {
           <div className="absolute -inset-4 rounded-[2rem] bg-amber-800/10" aria-hidden />
           <img
             src="/covers/how-to-be-an-alpha-male.svg"
-            alt={loc(books[0].title)}
+            alt={visibleBooks[0] ? loc(visibleBooks[0].title) : STORE_NAME}
             className="relative w-full rounded-3xl border border-stone-200 shadow-lg"
           />
         </div>
@@ -58,7 +59,7 @@ export function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <h2 className="font-serif text-3xl">{t("featured")}</h2>
           <div className="mt-8">
-            <BookGrid books={featured.length ? featured : books} />
+            <BookGrid books={featured.length ? featured : visibleBooks} />
           </div>
         </div>
       </section>
@@ -70,7 +71,7 @@ export function HomePage() {
             {t("viewAll")}
           </Link>
         </div>
-        <BookGrid books={books} />
+        <BookGrid books={visibleBooks} />
       </section>
 
       {showCategories ? <section className="border-t border-stone-200/80 bg-[#efe8dc]/40 py-14" id="categories">
@@ -79,7 +80,7 @@ export function HomePage() {
           <p className="mt-2 max-w-2xl text-stone-600">{t("categoriesIntro")}</p>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {categories.filter((cat) => cat.visible !== false).map((cat) => {
-              const count = getBooksByCategory(cat.id, books).length;
+              const count = getBooksByCategory(cat.id, visibleBooks).length;
               return (
                 <li key={cat.id}>
                   <Link

@@ -34,9 +34,9 @@ Set these as server-side environment variables in the deployment dashboard. Do n
 
 ## Persistent data requirement
 
-The current content store writes to `server/data/content.json` and cover uploads to `public/covers`. Serverless filesystems are not durable, so admin edits and uploaded covers can be lost after a new deployment or instance restart.
+On Netlify, catalog edits are stored in Netlify Blobs (`canvix-content`), so updates remain available across function instances and deployments. Netlify Blobs is enabled automatically for the site’s functions; no client-side environment variable is needed.
 
-Before using the admin panel in production, replace `server/contentStore.ts` filesystem writes with a durable database and object storage, or run the existing Express server on a persistent Node host. The included files are enough for the seeded catalog and read-only browsing, but they do not make serverless admin changes durable.
+Cover uploads still use `public/covers`, so use durable object storage for production cover uploads or commit uploaded covers to the repository.
 
 ## Local development
 

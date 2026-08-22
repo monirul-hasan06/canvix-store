@@ -1,5 +1,6 @@
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
+import { getStore } from "@netlify/blobs";
 import { books as seedBooks } from "../src/data/books";
 import { DEFAULT_PAYMENT_METHODS, type PaymentOption } from "../src/data/site";
 import { type SiteCopy } from "../src/i18n/dictionary";
@@ -18,6 +19,7 @@ export type ContentStore = {
 };
 
 const storePath = resolve(process.env.CONTENT_STORE_PATH || "server/data/content.json");
+const durableStore = process.env.NETLIFY ? getStore({ name: "canvix-content", consistency: "strong" }) : null;
 
 const initialStore = (): ContentStore => ({
   version: 1,
@@ -41,13 +43,12 @@ const initialStore = (): ContentStore => ({
 
 export async function loadContent(): Promise<ContentStore> {
   try {
+    if (durableStore) {
+      const stored = await durableStore.get("content", { type: "json" }) as ContentStore | null;
+      if (stored) return normalizeContent(stored);
+    }
     const parsed = JSON.parse(await readFile(storePath, "utf8")) as ContentStore;
-    if (!Array.isArray(parsed.books) || !Array.isArray(parsed.categories)) throw new Error("Invalid content store");
-    const legacy = (parsed as ContentStore & { paymentNumbers?: Record<string, string> }).paymentNumbers;
-    const paymentMethods = Array.isArray(parsed.paymentMethods) ? parsed.paymentMethods : Object.entries(legacy || {}).map(([id, number]) => ({ id, name: id === "bkash" ? "bKash" : id === "rocket" ? "Rocket" : id, number, enabled: true }));
-    if (!paymentMethods.length) throw new Error("Invalid payment methods");
-    const categories = parsed.categories.map((category) => ({ ...category, visible: category.visible !== false }));
-    return { ...parsed, categories, paymentMethods, siteCopy: parsed.siteCopy || {}, showCategories: parsed.showCategories !== false };
+    return normalizeContent(parsed);
   } catch {
     const seeded = initialStore();
     await saveContent(seeded);
@@ -56,10 +57,24 @@ export async function loadContent(): Promise<ContentStore> {
 }
 
 export async function saveContent(content: ContentStore): Promise<void> {
+  if (durableStore) {
+    await durableStore.setJSON("content", content);
+    return;
+  }
   await mkdir(dirname(storePath), { recursive: true });
   const temporaryPath = `${storePath}.tmp`;
   await writeFile(temporaryPath, `${JSON.stringify(content, null, 2)}\n`, "utf8");
   await rename(temporaryPath, storePath);
+}
+
+function normalizeContent(parsed: ContentStore): ContentStore {
+  if (!Array.isArray(parsed.books) || !Array.isArray(parsed.categories)) throw new Error("Invalid content store");
+  const legacy = (parsed as ContentStore & { paymentNumbers?: Record<string, string> }).paymentNumbers;
+  const paymentMethods = Array.isArray(parsed.paymentMethods) ? parsed.paymentMethods : Object.entries(legacy || {}).map(([id, number]) => ({ id, name: id === "bkash" ? "bKash" : id === "rocket" ? "Rocket" : id, number, enabled: true }));
+  if (!paymentMethods.length) throw new Error("Invalid payment methods");
+  const categories = parsed.categories.map((category) => ({ ...category, visible: category.visible !== false }));
+  const books = parsed.books.map((book) => ({ ...book, visible: book.visible !== false }));
+  return { ...parsed, books, categories, paymentMethods, siteCopy: parsed.siteCopy || {}, showCategories: parsed.showCategories !== false };
 }
 
 export function validateBook(value: unknown): value is Book {
@@ -102,5 +117,6 @@ export function sanitizeBook(value: Book): Book {
     fileSize: value.fileSize.trim().slice(0, 40),
     language: trimLocalized(value.language),
     priceBdt: Math.round(value.priceBdt * 100) / 100,
+    visible: value.visible !== false,
   };
 }

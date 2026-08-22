@@ -10,12 +10,13 @@ import { resolve } from "node:path";
 export const app = express();
 const port = Number(process.env.PORT || 3001);
 const orderRecipient = process.env.ORDER_RECIPIENT;
-const adminEmail = (process.env.ADMIN_EMAIL || ownerEmail).toLowerCase();
+const adminEmail = (process.env.ADMIN_EMAIL || orderRecipient || "").toLowerCase();
 const adminPassword = process.env.ADMIN_PASSWORD;
 const sessionSecret = process.env.SESSION_SECRET;
 
 app.use(express.json({ limit: "8mb" }));
 app.get("/api/content", async (_req, res) => {
+  res.setHeader("Cache-Control", "no-store, max-age=0");
   res.json(await loadContent());
 });
 
@@ -86,7 +87,7 @@ app.put("/api/admin/content", async (req, res) => {
     updatedAt: new Date().toISOString(),
     books: incoming.books.map((book) => sanitizeBook(book)),
     categories: categories.map((category) => ({ id: category.id.trim().slice(0, 100), name: { bn: category.name.bn.trim().slice(0, 200), en: category.name.en.trim().slice(0, 200) }, visible: category.visible !== false })),
-    paymentMethods: paymentMethods.map((method) => ({ id: String(method.id).trim().toLowerCase(), name: String(method.name).trim().slice(0, 80), number: String(method.number), enabled: method.enabled })),
+    paymentMethods: paymentMethods.map((method) => ({ id: String(method.id).trim().toLowerCase(), name: String(method.name).trim().slice(0, 80), number: String(method.number), enabled: method.enabled === true })),
     showCategories: incoming.showCategories,
     siteCopy: Object.fromEntries(Object.entries(incoming.siteCopy as Record<string, unknown>).filter(([key, value]) => /^[a-zA-Z0-9]+$/.test(key) && value && typeof value === "object").map(([key, value]) => { const copy = value as { bn?: unknown; en?: unknown }; return [key, { bn: String(copy.bn || "").slice(0, 4000), en: String(copy.en || "").slice(0, 4000) }]; })),
   };

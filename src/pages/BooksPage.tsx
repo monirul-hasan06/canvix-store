@@ -13,16 +13,17 @@ import { useContent } from "../context/ContentContext";
 export function BooksPage() {
   const { t, loc, lang } = useLanguage();
   const { books, categories } = useContent();
+  const visibleBooks = books.filter((book) => book.visible !== false);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryId | "all">("all");
 
   const visible = useMemo(() => {
-    let result = searchBooks(query, lang, books, categories);
+    let result = searchBooks(query, lang, visibleBooks, categories);
     if (category !== "all") {
       result = result.filter((b) => b.category === category);
     }
     return result;
-  }, [query, category, lang, books, categories]);
+  }, [query, category, lang, visibleBooks, categories]);
 
   return (
     <>
@@ -55,7 +56,7 @@ export function BooksPage() {
           </Field>
         </div>
         <p className="mb-4 mt-6 text-sm text-stone-500" aria-live="polite">
-          {t("showing")} {visible.length} / {books.length}
+          {t("showing")} {visible.length} / {visibleBooks.length}
         </p>
         <BookGrid books={visible} />
       </div>

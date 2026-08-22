@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import { Field, TextArea, TextInput } from "../components/ui/Field";
 import { Seo } from "../components/Seo";
+import { useContent } from "../context/ContentContext";
 import { DEFAULT_PAYMENT_METHODS, type PaymentOption } from "../data/site";
 import { defaultSiteCopy, type DictKey, type SiteCopy } from "../i18n/dictionary";
 import type { Book } from "../types/book";
@@ -27,6 +28,7 @@ async function request(path: string, options?: RequestInit) {
 }
 
 export function AdminPage() {
+  const { refreshContent } = useContent();
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -324,6 +326,7 @@ export function AdminPage() {
         body: JSON.stringify({ version: content.version, books, categories, paymentMethods, showCategories, siteCopy }),
       })) as Content;
       applyContent(saved);
+      await refreshContent();
       setNotice("Saved successfully.");
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Could not save changes.");
@@ -477,7 +480,7 @@ export function AdminPage() {
             <select aria-label="Sort catalog" className="rounded-xl border border-stone-300 bg-white px-3.5 py-2.5" value={catalogSort} onChange={(event) => setCatalogSort(event.target.value)}><option value="title">Sort by title</option><option value="price">Sort by price</option></select>
           </div>
           <div className="mt-5 divide-y divide-stone-100 border-t border-stone-100">
-            {filteredBooks.map((book) => <div key={book.id} className="flex flex-wrap items-center justify-between gap-3 py-3"><div><p className="font-medium">{book.title.en}</p><p className="text-xs text-stone-500">{book.category} · BDT {book.priceBdt}</p></div><div className="flex flex-wrap gap-2"><Button type="button" variant="secondary" onClick={() => startEditing(book)}>Edit all info</Button><Button type="button" variant="secondary" onClick={() => updateBook(book.id, { featured: !book.featured })}>{book.featured ? "Unfeature" : "Feature"}</Button><Button type="button" variant="secondary" onClick={() => updateBook(book.id, { newArrival: !book.newArrival })}>{book.newArrival ? "Remove new" : "Mark new"}</Button><Button type="button" variant="secondary" onClick={() => duplicateBook(book)}>Duplicate</Button><Button type="button" variant="secondary" onClick={() => deleteBook(book)}>Delete</Button></div></div>)}
+            {filteredBooks.map((book) => <div key={book.id} className="flex flex-wrap items-center justify-between gap-3 py-3"><div><p className="font-medium">{book.title.en}</p><p className="text-xs text-stone-500">{book.category} · BDT {book.priceBdt} · {book.visible !== false ? "Visible" : "Hidden"}</p></div><div className="flex flex-wrap gap-2"><Button type="button" variant="secondary" onClick={() => startEditing(book)}>Edit all info</Button><Button type="button" variant="secondary" onClick={() => updateBook(book.id, { visible: book.visible === false })}>{book.visible === false ? "Show on store" : "Hide from store"}</Button><Button type="button" variant="secondary" onClick={() => updateBook(book.id, { featured: !book.featured })}>{book.featured ? "Unfeature" : "Feature"}</Button><Button type="button" variant="secondary" onClick={() => updateBook(book.id, { newArrival: !book.newArrival })}>{book.newArrival ? "Remove new" : "Mark new"}</Button><Button type="button" variant="secondary" onClick={() => duplicateBook(book)}>Duplicate</Button><Button type="button" variant="secondary" onClick={() => deleteBook(book)}>Delete</Button></div></div>)}
           </div>
         </section>
         {editingBook ? <form onSubmit={saveEditingBook} className="mt-8 rounded-2xl border border-amber-200 bg-amber-50/60 p-6">
@@ -520,7 +523,7 @@ export function AdminPage() {
             <h2 className="font-serif text-2xl">Payment settings</h2>
             <p className="text-sm text-stone-500">Add bKash, Rocket, Nagad, or any other supported mobile payment account.</p>
             <div className="space-y-3">{paymentMethods.map((method) => <div key={method.id} className="grid gap-2 rounded-xl border border-stone-200 p-3 sm:grid-cols-[0.8fr_1fr_1fr_auto_auto] sm:items-end"><Field label="ID" htmlFor={`payment-id-${method.id}`}><TextInput id={`payment-id-${method.id}`} value={method.id} readOnly /></Field><Field label="Name" htmlFor={`payment-name-${method.id}`}><TextInput id={`payment-name-${method.id}`} value={method.name} onChange={(event) => updatePaymentMethod(method.id, { name: event.target.value })} /></Field><Field label="Account number" htmlFor={`payment-number-${method.id}`}><TextInput id={`payment-number-${method.id}`} inputMode="numeric" value={method.number} onChange={(event) => updatePaymentMethod(method.id, { number: event.target.value })} /></Field><label className="flex items-center gap-2 pb-2 text-sm"><input type="checkbox" checked={method.enabled} onChange={(event) => updatePaymentMethod(method.id, { enabled: event.target.checked })} /> Enabled</label><Button type="button" variant="secondary" onClick={() => removePaymentMethod(method.id)}>Remove</Button></div>)}</div>
-            <div className="grid gap-2 border-t border-stone-100 pt-4 sm:grid-cols-3"><TextInput aria-label="New payment ID" placeholder="nagad" value={newPaymentId} onChange={(event) => setNewPaymentId(event.target.value)} /><TextInput aria-label="New payment name" placeholder="Nagad" value={newPaymentName} onChange={(event) => setNewPaymentName(event.target.value)} required /><TextInput aria-label="New payment account number" placeholder="01XXXXXXXXX" inputMode="numeric" value={newPaymentNumber} onChange={(event) => setNewPaymentNumber(event.target.value)} required /><Button type="button" variant="secondary" onClick={addPaymentMethod}>Add payment method</Button></div>
+            <div className="grid gap-2 border-t border-stone-100 pt-4 sm:grid-cols-3"><TextInput aria-label="New payment ID" placeholder="nagad" value={newPaymentId} onChange={(event) => setNewPaymentId(event.target.value)} /><TextInput aria-label="New payment name" placeholder="Nagad" value={newPaymentName} onChange={(event) => setNewPaymentName(event.target.value)} /><TextInput aria-label="New payment account number" placeholder="01XXXXXXXXX" inputMode="numeric" value={newPaymentNumber} onChange={(event) => setNewPaymentNumber(event.target.value)} /><Button type="button" variant="secondary" onClick={addPaymentMethod}>Add payment method</Button></div>
             <label className="flex items-center gap-3 text-sm text-stone-700"><input type="checkbox" checked={showCategories} onChange={(event) => { setShowCategories(event.target.checked); setDraftDirty(true); }} /> Show category list on homepage</label>
             <p className="text-xs text-stone-500">Last saved: {content ? new Date(content.updatedAt).toLocaleString() : "-"}</p>
           </section>
@@ -551,7 +554,7 @@ export function AdminPage() {
             <p className="mt-1 text-sm text-stone-500">Add, edit, or remove categories using localized names.</p>
             <div className="mt-5 grid gap-3 sm:grid-cols-3">
               <TextInput aria-label="New category ID" placeholder="category-id" value={newCategoryId} onChange={(event) => setNewCategoryId(event.target.value)} />
-              <TextInput aria-label="New category English name" placeholder="English name" value={newCategoryEn} onChange={(event) => setNewCategoryEn(event.target.value)} required />
+              <TextInput aria-label="New category English name" placeholder="English name" value={newCategoryEn} onChange={(event) => setNewCategoryEn(event.target.value)} />
               <TextInput aria-label="New category Bangla name" placeholder="Bangla name" value={newCategoryBn} onChange={(event) => setNewCategoryBn(event.target.value)} />
               <Button type="button" variant="secondary" onClick={addCategory}>Add category</Button>
             </div>

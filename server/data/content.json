@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "updatedAt": "2026-08-22T19:54:03.776Z",
+  "version": 9,
+  "updatedAt": "2026-08-22T22:26:23.412Z",
   "books": [
     {
       "id": "alpha-male-001",
@@ -13,7 +13,7 @@
         "bn": "ক্যানভিক্স প্রেস",
         "en": "Canvix Press"
       },
-      "coverImage": "/covers/how-to-be-an-alpha-male.svg",
+      "coverImage": "/covers/book1_cover.png",
       "shortDescription": {
         "bn": "আত্মবিশ্বাস, উপস্থিতি ও দৈনন্দিন নেতৃত্ব নিয়ে একটি সংক্ষিপ্ত ডিজিটাল গাইড।",
         "en": "A concise digital guide to confidence, presence, and everyday leadership."
@@ -23,7 +23,7 @@
         "en": "How to Be an Alpha Male is a practical self-mastery handbook. It focuses on habits you can use at work, in relationships, and in daily life: presence, discipline, voice, and boundaries. Each chapter ends with a short practice you can complete the same day."
       },
       "receives": {
-        "bn": "পেমেন্ট যাচাইয়ের পর আপনার দেওয়া জিমেইলে মালিক নিজে পিডিএফ পাঠাবেন। ওয়েবসাইট থেকে ফাইল ডাউনলোড হয় না।",
+        "bn": "পেমেন্ট যাচাইয়ের পর আপনার দেওয়া জিমেইলে Canvix Team নিজে পিডিএফ পাঠাবেন। ওয়েবসাইট থেকে ফাইল ডাউনলোড হয় না।",
         "en": "After the owner verifies your payment, the PDF is sent manually to the Gmail you provide. There is no download from this website."
       },
       "priceBdt": 50,
@@ -46,50 +46,9 @@
       },
       "format": "PDF",
       "featured": true,
-      "newArrival": true
-    },
-    {
-      "id": "book-1787428439600",
-      "slug": "how-to-be-an-alpha-male-pdf-book",
-      "title": {
-        "bn": "কিভাবে একজন আলফা মেল হবেন",
-        "en": "How to be An Alpha Male pdf book"
-      },
-      "author": {
-        "bn": "Canvix Store টিম",
-        "en": "Canvix Store Team"
-      },
-      "coverImage": "/covers/book1_cover.png",
-      "shortDescription": {
-        "bn": "lsjlflajs short des",
-        "en": "sjlajga'g\nag short de"
-      },
-      "longDescription": {
-        "bn": "full dess",
-        "en": "full de"
-      },
-      "receives": {
-        "bn": "ajfa",
-        "en": "podjsja"
-      },
-      "priceBdt": 50,
-      "originalPriceBdt": 95,
-      "category": "self-development",
-      "tags": [
-        {
-          "bn": "কি লিখব",
-          "en": "Self Improvement"
-        }
-      ],
-      "pages": 25,
-      "fileSize": "3kb",
-      "language": {
-        "bn": "ইংরেজি",
-        "en": "English"
-      },
-      "format": "PDF",
-      "featured": false,
-      "newArrival": true
+      "newArrival": true,
+      "visible": true,
+      "originalPriceBdt": 98.99
     }
   ],
   "categories": [
@@ -98,68 +57,565 @@
       "name": {
         "bn": "আত্মউন্নয়ন",
         "en": "Self Development"
-      }
+      },
+      "visible": true
     },
     {
       "id": "programming",
       "name": {
         "bn": "প্রোগ্রামিং",
         "en": "Programming"
-      }
+      },
+      "visible": false
     },
     {
       "id": "web-development",
       "name": {
         "bn": "ওয়েব ডেভেলপমেন্ট",
         "en": "Web Development"
-      }
+      },
+      "visible": false
     },
     {
       "id": "business",
       "name": {
         "bn": "ব্যবসা",
         "en": "Business"
-      }
+      },
+      "visible": false
     },
     {
       "id": "education",
       "name": {
         "bn": "শিক্ষা",
         "en": "Education"
-      }
+      },
+      "visible": false
     },
     {
       "id": "technology",
       "name": {
         "bn": "প্রযুক্তি",
         "en": "Technology"
-      }
+      },
+      "visible": false
     },
     {
       "id": "productivity",
       "name": {
         "bn": "প্রোডাক্টিভিটি",
         "en": "Productivity"
-      }
+      },
+      "visible": false
     },
     {
       "id": "career",
       "name": {
         "bn": "ক্যারিয়ার",
         "en": "Career"
-      }
+      },
+      "visible": false
     },
     {
       "id": "other",
       "name": {
         "bn": "অন্যান্য",
         "en": "Other"
-      }
+      },
+      "visible": false
     }
   ],
-  "paymentNumbers": {
-    "bkash": "01318080805",
-    "rocket": "01318080805"
-  },
-  "showCategories": true
+  "paymentMethods": [
+    {
+      "id": "bkash",
+      "name": "bKash",
+      "number": "01318080805",
+      "enabled": true
+    },
+    {
+      "id": "rocket",
+      "name": "Rocket",
+      "number": "01318080805",
+      "enabled": true
+    }
+  ],
+  "showCategories": true,
+  "siteCopy": {
+    "navHome": {
+      "bn": "হোম",
+      "en": "Home"
+    },
+    "navBooks": {
+      "bn": "বই",
+      "en": "Books"
+    },
+    "navCategories": {
+      "bn": "ক্যাটাগরি",
+      "en": "Categories"
+    },
+    "navHow": {
+      "bn": "কীভাবে কাজ করে",
+      "en": "How It Works"
+    },
+    "navFaq": {
+      "bn": "জিজ্ঞাসা",
+      "en": "FAQ"
+    },
+    "navContact": {
+      "bn": "যোগাযোগ",
+      "en": "Contact"
+    },
+    "menu": {
+      "bn": "মেনু",
+      "en": "Menu"
+    },
+    "close": {
+      "bn": "বন্ধ",
+      "en": "Close"
+    },
+    "langBn": {
+      "bn": "বাংলা",
+      "en": "বাংলা"
+    },
+    "langEn": {
+      "bn": "English",
+      "en": "English"
+    },
+    "skip": {
+      "bn": "মূল কন্টেন্টে যান",
+      "en": "Skip to content"
+    },
+    "heroKicker": {
+      "bn": "ডিজিটাল পিডিএফ বুকস্টোর",
+      "en": "Digital PDF bookstore"
+    },
+    "heroTitle": {
+      "bn": "বই কিনুন। পেমেন্ট পাঠান। ইমেইলে পিডিএফ পান।",
+      "en": "Choose a book. Send payment. Receive the PDF by email."
+    },
+    "heroBody": {
+      "bn": "ক্যানভিক্স স্টোর একটি ডিজিটাল মার্কেটপ্লেস। আপনি বই বেছে নিয়ে বিকাশ বা রকেটে টাকা পাঠান, ফর্ম পূরণ করেন—মালিক হাতে যাচাই করে আপনার জিমেইলে পিডিএফ পাঠান।",
+      "en": "Canvix Store is a digital marketplace. You pick a title, send bKash or Rocket, submit the order form, and the owner verifies payment by hand, then emails the PDF to your Gmail."
+    },
+    "browseBooks": {
+      "bn": "বই দেখুন",
+      "en": "Browse Books"
+    },
+    "exploreCollection": {
+      "bn": "সংগ্রহ ঘুরে দেখুন",
+      "en": "Explore Collection"
+    },
+    "featured": {
+      "bn": "নির্বাচিত বই",
+      "en": "Featured Books"
+    },
+    "allBooks": {
+      "bn": "সব বই",
+      "en": "All Books"
+    },
+    "viewAll": {
+      "bn": "সব দেখুন",
+      "en": "View all"
+    },
+    "categories": {
+      "bn": "ক্যাটাগরি",
+      "en": "Categories"
+    },
+    "categoriesIntro": {
+      "bn": "পরে আরও শিরোনাম যোগ করা সহজ—ক্যাটাগরি আগে থেকেই সাজানো।",
+      "en": "Categories are ready so new titles can be added later without rebuilding the site."
+    },
+    "booksInCategory": {
+      "bn": "টি বই",
+      "en": "books"
+    },
+    "emptyCategory": {
+      "bn": "এই ক্যাটাগরিতে এখনও বই নেই।",
+      "en": "No books in this category yet."
+    },
+    "howTitle": {
+      "bn": "কীভাবে কাজ করে",
+      "en": "How It Works"
+    },
+    "how1t": {
+      "bn": "বই বেছে নিন",
+      "en": "Choose a Book"
+    },
+    "how1b": {
+      "bn": "কভার, দাম ও বিবরণ দেখে আপনার বইটি নির্বাচন করুন।",
+      "en": "Open a title, read the details, and confirm the price."
+    },
+    "how2t": {
+      "bn": "পেমেন্ট পাঠান",
+      "en": "Send Payment"
+    },
+    "how2b": {
+      "bn": "বিকাশ বা রকেট পার্সোনাল নম্বরে বইয়ের সঠিক দাম পাঠান।",
+      "en": "Send the exact book price to the bKash or Rocket personal number."
+    },
+    "how3t": {
+      "bn": "তথ্য জমা দিন",
+      "en": "Submit Your Information"
+    },
+    "how3b": {
+      "bn": "নাম, জিমেইল, ট্রানজেকশন আইডি ও প্রেরকের নম্বর ফর্মে লিখুন।",
+      "en": "Enter your name, Gmail, transaction ID, and the mobile number you paid from."
+    },
+    "how4t": {
+      "bn": "আমরা পেমেন্ট যাচাই করি",
+      "en": "We Verify Your Payment"
+    },
+    "how4b": {
+      "bn": "মালিক নিজে লেনদেন মিলিয়ে দেখেন। স্বয়ংক্রিয় যাচাই নেই।",
+      "en": "The store owner checks the transaction manually. There is no automatic verification."
+    },
+    "how5t": {
+      "bn": "ইমেইলে পিডিএফ পান",
+      "en": "Receive Your PDF by Email"
+    },
+    "how5b": {
+      "bn": "যাচাইয়ের পর আপনার দেওয়া জিমেইলে পিডিএফ ম্যানুয়ালি পাঠানো হয়।",
+      "en": "After verification, the owner replies to your Gmail and sends the PDF. There is no download link here."
+    },
+    "faqTitle": {
+      "bn": "সচরাচর জিজ্ঞাসা",
+      "en": "FAQ"
+    },
+    "faq1q": {
+      "bn": "পিডিএফ কীভাবে পাব?",
+      "en": "How do I get the PDF?"
+    },
+    "faq1a": {
+      "bn": "ওয়েবসাইট থেকে ডাউনলোড হয় না। পেমেন্ট যাচাইয়ের পর মালিক আপনার জিমেইলে পিডিএফ পাঠাবেন।",
+      "en": "There is no download on this website. After payment is verified, the owner emails the PDF to the Gmail you submitted."
+    },
+    "faq2q": {
+      "bn": "কীভাবে টাকা পাঠাব?",
+      "en": "How do I pay?"
+    },
+    "faq2a": {
+      "bn": "চেকআউটে দেখানো বিকাশ বা রকেট পার্সোনাল নম্বরে বইয়ের সঠিক দাম পাঠান। ট্রানজেকশন আইডি রাখুন।",
+      "en": "Send the exact book price to the bKash or Rocket personal number shown at checkout. Keep your transaction ID."
+    },
+    "faq3q": {
+      "bn": "পেমেন্ট কি নিজে থেকে যাচাই হয়?",
+      "en": "Is payment verified automatically?"
+    },
+    "faq3a": {
+      "bn": "না। পেমেন্ট ম্যানুয়ালি যাচাই হয়। পিডিএফও ম্যানুয়ালি ইমেইলে যায়।",
+      "en": "No. Payment is verified by hand. The PDF is also sent by hand over email."
+    },
+    "faq4q": {
+      "bn": "কতক্ষণ লাগে?",
+      "en": "How long does it take?"
+    },
+    "faq4a": {
+      "bn": "মালিক লেনদেন দেখে জবাব দেন। সাধারণত জিমেইল চেক করুন এবং স্প্যাম ফোল্ডারও দেখুন।",
+      "en": "The owner reviews the transaction and replies by Gmail. Check inbox and spam."
+    },
+    "faq5q": {
+      "bn": "কোন ইমেইল ব্যবহার করব?",
+      "en": "Which email should I use?"
+    },
+    "faq5a": {
+      "bn": "সঠিক জিমেইল দিন। পিডিএফ সেই ঠিকানায় পাঠানো হবে।",
+      "en": "Use a working Gmail address. That is where the PDF will be sent."
+    },
+    "footerBlurb": {
+      "bn": "ডিজিটাল পিডিএফ বইয়ের দোকান। ম্যানুয়াল পেমেন্ট, ম্যানুয়াল ডেলিভারি—সহজ ও বিশ্বাসযোগ্য।",
+      "en": "A digital PDF bookstore. Manual payment, manual delivery — simple and trustworthy."
+    },
+    "copyright": {
+      "bn": "সর্বস্বত্ব সংরক্ষিত।",
+      "en": "All rights reserved."
+    },
+    "viewDetails": {
+      "bn": "বিস্তারিত",
+      "en": "View Details"
+    },
+    "buyNow": {
+      "bn": "এখনই কিনুন",
+      "en": "Buy Now"
+    },
+    "format": {
+      "bn": "ফরম্যাট",
+      "en": "Format"
+    },
+    "pages": {
+      "bn": "পৃষ্ঠা",
+      "en": "Pages"
+    },
+    "fileSize": {
+      "bn": "ফাইল সাইজ",
+      "en": "File size"
+    },
+    "language": {
+      "bn": "ভাষা",
+      "en": "Language"
+    },
+    "category": {
+      "bn": "ক্যাটাগরি",
+      "en": "Category"
+    },
+    "author": {
+      "bn": "লেখক",
+      "en": "Author"
+    },
+    "youReceive": {
+      "bn": "আপনি যা পাবেন",
+      "en": "What you receive"
+    },
+    "related": {
+      "bn": "সম্পর্কিত বই",
+      "en": "Related Books"
+    },
+    "search": {
+      "bn": "খুঁজুন",
+      "en": "Search"
+    },
+    "searchPh": {
+      "bn": "শিরোনাম, লেখক বা ট্যাগ",
+      "en": "Title, author, or tag"
+    },
+    "filterCategory": {
+      "bn": "ক্যাটাগরি",
+      "en": "Category"
+    },
+    "allCategories": {
+      "bn": "সব ক্যাটাগরি",
+      "en": "All categories"
+    },
+    "showing": {
+      "bn": "দেখানো হচ্ছে",
+      "en": "Showing"
+    },
+    "noBooks": {
+      "bn": "কোনো বই মেলেনি।",
+      "en": "No books match your search."
+    },
+    "bookNotFound": {
+      "bn": "বই পাওয়া যায়নি",
+      "en": "Book not found"
+    },
+    "backToBooks": {
+      "bn": "বইয়ের তালিকায় ফিরুন",
+      "en": "Back to books"
+    },
+    "newBadge": {
+      "bn": "নতুন",
+      "en": "New"
+    },
+    "paymentTitle": {
+      "bn": "পেমেন্ট ও অর্ডার",
+      "en": "Payment & order"
+    },
+    "selectedBook": {
+      "bn": "নির্বাচিত বই",
+      "en": "Selected book"
+    },
+    "paymentMethods": {
+      "bn": "পেমেন্ট পদ্ধতি",
+      "en": "Payment methods"
+    },
+    "personal": {
+      "bn": "পার্সোনাল",
+      "en": "Personal"
+    },
+    "copy": {
+      "bn": "কপি",
+      "en": "Copy"
+    },
+    "copied": {
+      "bn": "কপি হয়েছে",
+      "en": "Copied"
+    },
+    "instructions": {
+      "bn": "পেমেন্ট নির্দেশনা",
+      "en": "Payment instructions"
+    },
+    "ins1": {
+      "bn": "পছন্দের পেমেন্ট পদ্ধতি বেছে নিন।",
+      "en": "Select your preferred payment method."
+    },
+    "ins2": {
+      "bn": "দেখানো পার্সোনাল নম্বরে বইয়ের সঠিক দাম পাঠান।",
+      "en": "Send the exact book price to the displayed personal number."
+    },
+    "ins3": {
+      "bn": "ট্রানজেকশন আইডি সংরক্ষণ করুন।",
+      "en": "Keep your transaction ID."
+    },
+    "ins4": {
+      "bn": "যে মোবাইল নম্বর থেকে টাকা পাঠিয়েছেন সেটি মনে রাখুন।",
+      "en": "Remember the mobile number from which you sent the payment."
+    },
+    "ins5": {
+      "bn": "অর্ডার নিশ্চিতকরণ ফর্ম পূরণ করুন।",
+      "en": "Complete the order confirmation form."
+    },
+    "ins6": {
+      "bn": "ফর্ম জমা দিন।",
+      "en": "Submit the form."
+    },
+    "ins7": {
+      "bn": "দোকানের মালিক পেমেন্ট ম্যানুয়ালি যাচাই করবেন।",
+      "en": "The store owner will manually verify your payment."
+    },
+    "ins8": {
+      "bn": "যাচাইয়ের পর মালিক আপনার জিমেইলে উত্তর দিয়ে পিডিএফ পাঠাবেন।",
+      "en": "After verification, the store owner will reply to your Gmail and send the purchased PDF."
+    },
+    "manualNotice": {
+      "bn": "পেমেন্ট ম্যানুয়ালি যাচাই হয়। যাচাইয়ের পর পিডিএফ ইমেইলে ম্যানুয়ালি পাঠানো হবে।",
+      "en": "Payment is manually verified. Your PDF will be sent manually by email after verification."
+    },
+    "formTitle": {
+      "bn": "অর্ডার নিশ্চিতকরণ",
+      "en": "Order confirmation"
+    },
+    "customerInfo": {
+      "bn": "গ্রাহকের তথ্য",
+      "en": "Customer information"
+    },
+    "fullName": {
+      "bn": "পূর্ণ নাম",
+      "en": "Full name"
+    },
+    "gmail": {
+      "bn": "জিমেইল ঠিকানা",
+      "en": "Gmail address"
+    },
+    "bookInfo": {
+      "bn": "বইয়ের তথ্য",
+      "en": "Book information"
+    },
+    "bookPrice": {
+      "bn": "বইয়ের দাম",
+      "en": "Book price"
+    },
+    "paymentInfo": {
+      "bn": "পেমেন্ট তথ্য",
+      "en": "Payment information"
+    },
+    "paymentMethod": {
+      "bn": "পেমেন্ট পদ্ধতি",
+      "en": "Payment method"
+    },
+    "senderMobile": {
+      "bn": "প্রেরকের মোবাইল নম্বর",
+      "en": "Sender's mobile number"
+    },
+    "trxId": {
+      "bn": "ট্রানজেকশন আইডি",
+      "en": "Transaction ID"
+    },
+    "payAmount": {
+      "bn": "পেমেন্ট পরিমাণ",
+      "en": "Payment amount"
+    },
+    "message": {
+      "bn": "বার্তা (ঐচ্ছিক)",
+      "en": "Customer message (optional)"
+    },
+    "submitOrder": {
+      "bn": "অর্ডার জমা দিন",
+      "en": "Submit order"
+    },
+    "sendWhatsApp": {
+      "bn": "হোয়াটসঅ্যাপে পাঠান",
+      "en": "Send via WhatsApp"
+    },
+    "submitting": {
+      "bn": "জমা হচ্ছে…",
+      "en": "Submitting…"
+    },
+    "required": {
+      "bn": "এই ঘরটি আবশ্যক।",
+      "en": "This field is required."
+    },
+    "invalidEmail": {
+      "bn": "সঠিক জিমেইল ঠিকানা দিন (উদাহরণ: name@gmail.com)।",
+      "en": "Enter a valid Gmail address (example: name@gmail.com)."
+    },
+    "invalidMobile": {
+      "bn": "সঠিক বাংলাদেশি মোবাইল নম্বর দিন (০১XXXXXXXXX)।",
+      "en": "Enter a valid Bangladeshi mobile number (01XXXXXXXXX)."
+    },
+    "invalidTrx": {
+      "bn": "ট্রানজেকশন আইডি লিখুন।",
+      "en": "Enter your transaction ID."
+    },
+    "amountMismatch": {
+      "bn": "পেমেন্ট পরিমাণ বইয়ের দামের সমান হতে হবে।",
+      "en": "Payment amount must match the book price."
+    },
+    "submitError": {
+      "bn": "অর্ডার পাঠানো যায়নি। কিছুক্ষণ পর আবার চেষ্টা করুন।",
+      "en": "Could not send the order. Please try again in a moment."
+    },
+    "successTitle": {
+      "bn": "অর্ডার সফলভাবে জমা হয়েছে!",
+      "en": "Order Submitted Successfully!"
+    },
+    "successBody": {
+      "bn": "আপনার অর্ডারের তথ্য আমরা পেয়েছি। পেমেন্ট ম্যানুয়ালি যাচাই করা হবে। যাচাইয়ের পর কেনা পিডিএফ আপনার দেওয়া জিমেইলে পাঠানো হবে।",
+      "en": "Your order information has been received successfully. We will manually verify your payment. After verification, your purchased PDF will be sent to the Gmail address you provided."
+    },
+    "orderId": {
+      "bn": "অর্ডার আইডি",
+      "en": "Order ID"
+    },
+    "contactIntro": {
+      "bn": "অর্ডার বা ক্যাটাগরি নিয়ে প্রশ্ন থাকলে লিখুন। পিডিএফ এই ফর্ম দিয়ে যায় না—কেবল কেনাকাটার ফর্মের মাধ্যমে অর্ডার হয়।",
+      "en": "Questions about an order or the catalog? This form does not deliver PDFs — use Buy Now to place an order."
+    },
+    "yourMessage": {
+      "bn": "বার্তা",
+      "en": "Message"
+    },
+    "sendMessage": {
+      "bn": "বার্তা পাঠান",
+      "en": "Send message"
+    },
+    "messageSent": {
+      "bn": "বার্তা গৃহীত হয়েছে।",
+      "en": "Message received."
+    },
+    "notFound": {
+      "bn": "পাতা পাওয়া যায়নি",
+      "en": "Page not found"
+    },
+    "goHome": {
+      "bn": "হোমে যান",
+      "en": "Go home"
+    },
+    "seoHome": {
+      "bn": "ক্যানভিক্স স্টোর — ডিজিটাল পিডিএফ বই। বিকাশ/রকেটে পেমেন্ট, যাচাইয়ের পর জিমেইলে পিডিএফ।",
+      "en": "Canvix Store — digital PDF books. Pay via bKash/Rocket; the PDF is emailed after manual verification."
+    },
+    "seoBooks": {
+      "bn": "ক্যানভিক্স স্টোরের সব ডিজিটাল বই দেখুন।",
+      "en": "Browse every digital book at Canvix Store."
+    },
+    "seoFaq": {
+      "bn": "পেমেন্ট, ডেলিভারি ও যাচাই নিয়ে প্রশ্নোত্তর।",
+      "en": "Answers about payment, delivery, and manual verification."
+    },
+    "seoContact": {
+      "bn": "ক্যানভিক্স স্টোরের সাথে যোগাযোগ করুন।",
+      "en": "Contact Canvix Store."
+    },
+    "seoHow": {
+      "bn": "ক্যানভিক্স স্টোরে বই কেনা ও ম্যানুয়াল পিডিএফ ডেলিভারি কীভাবে হয়।",
+      "en": "How buying a book and receiving a PDF by email works at Canvix Store."
+    },
+    "seoCheckout": {
+      "bn": "বিকাশ বা রকেটে পেমেন্ট পাঠান এবং অর্ডার ফর্ম জমা দিন।",
+      "en": "Send bKash or Rocket payment and submit your order form."
+    },
+    "seoSuccess": {
+      "bn": "আপনার ক্যানভিক্স স্টোর অর্ডার জমা হয়েছে।",
+      "en": "Your Canvix Store order was submitted."
+    }
+  }
 }

@@ -26,4 +26,5 @@ export type Book = {
   format: "PDF";
   featured: boolean;
   newArrival: boolean;
+  visible?: boolean;
 };

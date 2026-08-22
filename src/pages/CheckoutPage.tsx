@@ -16,7 +16,8 @@ export function CheckoutPage() {
   const { t, loc } = useLanguage();
   const navigate = useNavigate();
   const { books, categories, paymentMethods } = useContent();
-  const book = slug ? getBookBySlug(slug, books) : undefined;
+  const visibleBooks = books.filter((entry) => entry.visible !== false);
+  const book = slug ? getBookBySlug(slug, visibleBooks) : undefined;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

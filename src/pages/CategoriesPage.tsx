@@ -9,6 +9,7 @@ import { useContent } from "../context/ContentContext";
 export function CategoriesPage() {
   const { t, loc } = useLanguage();
   const { books, categories } = useContent();
+  const visibleBooks = books.filter((book) => book.visible !== false);
   const { id } = useParams();
   const selected = categories.find((c) => c.id === id && c.visible !== false);
 
@@ -25,7 +26,7 @@ export function CategoriesPage() {
   }
 
   if (selected) {
-    const list = getBooksByCategory(selected.id as CategoryId, books);
+    const list = getBooksByCategory(selected.id as CategoryId, visibleBooks);
     return (
       <>
         <Seo title={loc(selected.name)} description={t("categoriesIntro")} />
@@ -62,7 +63,7 @@ export function CategoriesPage() {
               >
                 <p className="font-serif text-xl">{loc(cat.name)}</p>
                 <p className="mt-1 text-sm text-stone-500">
-                  {getBooksByCategory(cat.id, books).length} {t("booksInCategory")}
+                  {getBooksByCategory(cat.id, visibleBooks).length} {t("booksInCategory")}
                 </p>
               </Link>
             </li>

@@ -17,7 +17,8 @@ export function BookDetailsPage() {
   const { slug } = useParams();
   const { t, loc } = useLanguage();
   const { books, categories } = useContent();
-  const book = slug ? getBookBySlug(slug, books) : undefined;
+  const visibleBooks = books.filter((entry) => entry.visible !== false);
+  const book = slug ? getBookBySlug(slug, visibleBooks) : undefined;
 
   if (!book) {
     return (
@@ -32,7 +33,7 @@ export function BookDetailsPage() {
   }
 
   const discount = discountPercent(book);
-  const related = getRelatedBooks(book, 3, books);
+  const related = getRelatedBooks(book, 3, visibleBooks);
 
   const jsonLd = {
     "@context": "https://schema.org",

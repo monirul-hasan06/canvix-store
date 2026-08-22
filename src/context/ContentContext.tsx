@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { books as fallbackBooks } from "../data/books";
 import { DEFAULT_PAYMENT_METHODS, type PaymentOption } from "../data/site";
 import { defaultSiteCopy, type SiteCopy } from "../i18n/dictionary";
@@ -15,6 +15,8 @@ type Content = {
   showCategories: boolean;
   siteCopy: SiteCopy;
 };
+
+type ContentContextValue = Content & { refreshContent: () => Promise<void> };
 
 const fallbackContent: Content = {
   version: 0,
@@ -36,13 +38,13 @@ const fallbackContent: Content = {
   siteCopy: defaultSiteCopy,
 };
 
-const ContentContext = createContext<Content>(fallbackContent);
+const ContentContext = createContext<ContentContextValue>({ ...fallbackContent, refreshContent: async () => undefined });
 
 export function ContentProvider({ children }: { children: ReactNode }) {
   const [content, setContent] = useState<Content>(fallbackContent);
 
-  useEffect(() => {
-    fetch("/api/content")
+  const refreshContent = useCallback(async () => {
+    await fetch("/api/content", { cache: "no-store" })
       .then((response) => (response.ok ? response.json() : Promise.reject(new Error("Content unavailable"))))
       .then((data: Content & { paymentNumbers?: Record<string, string>; siteCopy?: SiteCopy }) => {
         const paymentMethods = data.paymentMethods?.length ? data.paymentMethods : Object.entries(data.paymentNumbers || {}).map(([id, number]) => ({ id, name: id === "bkash" ? "bKash" : id === "rocket" ? "Rocket" : id, number, enabled: true }));
@@ -51,7 +53,13 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       .catch(() => undefined);
   }, []);
 
-  return <ContentContext.Provider value={content}>{children}</ContentContext.Provider>;
+  useEffect(() => {
+    void refreshContent();
+    window.addEventListener("focus", refreshContent);
+    return () => window.removeEventListener("focus", refreshContent);
+  }, [refreshContent]);
+
+  return <ContentContext.Provider value={{ ...content, refreshContent }}>{children}</ContentContext.Provider>;
 }
 
 export function useContent() {
