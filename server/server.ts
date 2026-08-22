@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { randomBytes, timingSafeEqual } from "node:crypto";
+import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import express from "express";
 import rateLimit from "express-rate-limit";
 import nodemailer from "nodemailer";
@@ -7,12 +7,12 @@ import { loadContent, saveContent, sanitizeBook, validateBook } from "./contentS
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-const app = express();
+export const app = express();
 const port = Number(process.env.PORT || 3001);
 const ownerEmail = process.env.OWNER_EMAIL || "dev.get.in.touch@gmail.com";
-const sessions = new Map<string, number>();
 const adminEmail = (process.env.ADMIN_EMAIL || ownerEmail).toLowerCase();
 const adminPassword = process.env.ADMIN_PASSWORD;
+const sessionSecret = process.env.SESSION_SECRET;
 
 app.use(express.json({ limit: "8mb" }));
 app.get("/api/content", async (_req, res) => {
@@ -26,12 +26,18 @@ function parseCookies(value: string | undefined): Record<string, string> {
 
 function isAdmin(req: express.Request): boolean {
   const token = parseCookies(req.headers.cookie).canvix_admin;
-  const expiresAt = token ? sessions.get(token) : undefined;
-  if (!expiresAt || expiresAt < Date.now()) {
-    if (token) sessions.delete(token);
-    return false;
-  }
-  return true;
+  if (!token || !sessionSecret) return false;
+  const [expiresAtValue, nonce, signature] = token.split(".");
+  const expiresAt = Number(expiresAtValue);
+  if (!nonce || !signature || !Number.isSafeInteger(expiresAt) || expiresAt < Date.now()) return false;
+  const expected = signSession(`${expiresAt}.${nonce}`);
+  const actualBuffer = Buffer.from(signature, "hex");
+  const expectedBuffer = Buffer.from(expected, "hex");
+  return actualBuffer.length === expectedBuffer.length && timingSafeEqual(actualBuffer, expectedBuffer);
+}
+
+function signSession(value: string): string {
+  return createHmac("sha256", sessionSecret || "").update(value).digest("hex");
 }
 
 app.post("/api/admin/login", authLimiter, (req, res) => {
@@ -44,15 +50,14 @@ app.post("/api/admin/login", authLimiter, (req, res) => {
     return left.length === right.length && timingSafeEqual(left, right);
   })() : false;
   if (!validEmail || !validPassword) return res.status(401).json({ error: "Invalid admin credentials." });
-  const token = randomBytes(32).toString("hex");
-  sessions.set(token, Date.now() + 8 * 60 * 60 * 1000);
+  const expiresAt = Date.now() + 8 * 60 * 60 * 1000;
+  const sessionValue = `${expiresAt}.${randomBytes(32).toString("hex")}`;
+  const token = `${sessionValue}.${signSession(sessionValue)}`;
   res.setHeader("Set-Cookie", `canvix_admin=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800${process.env.NODE_ENV === "production" ? "; Secure" : ""}`);
   return res.json({ authenticated: true });
 });
 
 app.post("/api/admin/logout", (req, res) => {
-  const token = parseCookies(req.headers.cookie).canvix_admin;
-  if (token) sessions.delete(token);
   res.setHeader("Set-Cookie", "canvix_admin=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0");
   return res.status(204).send();
 });
@@ -61,28 +66,29 @@ app.get("/api/admin/session", (req, res) => res.json({ authenticated: isAdmin(re
 
 app.put("/api/admin/content", async (req, res) => {
   if (!isAdmin(req)) return res.status(401).json({ error: "Authentication required." });
-  const incoming = req.body as { version?: unknown; books?: unknown; categories?: unknown; paymentNumbers?: unknown; showCategories?: unknown };
-  if (!Number.isInteger(incoming.version) || !Array.isArray(incoming.books) || !Array.isArray(incoming.categories) || !incoming.paymentNumbers || typeof incoming.showCategories !== "boolean") {
+  const incoming = req.body as { version?: unknown; books?: unknown; categories?: unknown; paymentMethods?: unknown; showCategories?: unknown; siteCopy?: unknown };
+  if (!Number.isInteger(incoming.version) || !Array.isArray(incoming.books) || !Array.isArray(incoming.categories) || !Array.isArray(incoming.paymentMethods) || !incoming.siteCopy || typeof incoming.siteCopy !== "object" || typeof incoming.showCategories !== "boolean") {
     return res.status(400).json({ error: "Invalid content payload." });
   }
   const current = await loadContent();
   if (incoming.version !== current.version) return res.status(409).json({ error: "Content changed. Reload and try again." });
   if (!incoming.books.every(validateBook) || !incoming.categories.every((category) => category && typeof category === "object" && typeof (category as { id?: unknown }).id === "string" && (category as { name?: { bn?: unknown; en?: unknown } }).name && typeof (category as { name: { bn?: unknown; en?: unknown } }).name.bn === "string" && typeof (category as { name: { bn?: unknown; en?: unknown } }).name.en === "string")) return res.status(400).json({ error: "Catalog or categories are invalid." });
-  const categories = incoming.categories as { id: string; name: { bn: string; en: string } }[];
+  const categories = incoming.categories as { id: string; name: { bn: string; en: string }; visible?: unknown }[];
   if (new Set(categories.map((category) => category.id)).size !== categories.length || incoming.books.some((book) => !categories.some((category) => category.id === (book as { category?: unknown }).category))) {
     return res.status(400).json({ error: "Every book must use one unique existing category." });
   }
-  const numbers = incoming.paymentNumbers as Record<string, unknown>;
-  if (!/^01[3-9]\d{8}$/.test(String(numbers.bkash)) || !/^01[3-9]\d{8}$/.test(String(numbers.rocket))) {
-    return res.status(400).json({ error: "Payment numbers are invalid." });
+  const paymentMethods = incoming.paymentMethods as { id?: unknown; name?: unknown; number?: unknown; enabled?: unknown }[];
+  if (!paymentMethods.length || new Set(paymentMethods.map((method) => method.id)).size !== paymentMethods.length || paymentMethods.some((method) => !/^[a-z0-9-]{2,40}$/.test(String(method.id)) || !String(method.name).trim() || !/^01[3-9]\d{8}$/.test(String(method.number)) || typeof method.enabled !== "boolean")) {
+    return res.status(400).json({ error: "Payment methods are invalid." });
   }
   const next = {
     version: current.version + 1,
     updatedAt: new Date().toISOString(),
     books: incoming.books.map((book) => sanitizeBook(book)),
-    categories: categories.map((category) => ({ id: category.id.trim().slice(0, 100), name: { bn: category.name.bn.trim().slice(0, 200), en: category.name.en.trim().slice(0, 200) } })),
-    paymentNumbers: { bkash: String(numbers.bkash), rocket: String(numbers.rocket) } as typeof current.paymentNumbers,
+    categories: categories.map((category) => ({ id: category.id.trim().slice(0, 100), name: { bn: category.name.bn.trim().slice(0, 200), en: category.name.en.trim().slice(0, 200) }, visible: category.visible !== false })),
+    paymentMethods: paymentMethods.map((method) => ({ id: String(method.id).trim().toLowerCase(), name: String(method.name).trim().slice(0, 80), number: String(method.number), enabled: method.enabled })),
     showCategories: incoming.showCategories,
+    siteCopy: Object.fromEntries(Object.entries(incoming.siteCopy as Record<string, unknown>).filter(([key, value]) => /^[a-zA-Z0-9]+$/.test(key) && value && typeof value === "object").map(([key, value]) => { const copy = value as { bn?: unknown; en?: unknown }; return [key, { bn: String(copy.bn || "").slice(0, 4000), en: String(copy.en || "").slice(0, 4000) }]; })),
   };
   await saveContent(next);
   return res.json(next);
@@ -111,12 +117,6 @@ function clean(value: unknown, maxLength: number): string {
   return typeof value === "string" ? value.replace(/[\u0000-\u001f\u007f]/g, "").trim().slice(0, maxLength) : "";
 }
 
-function nextOrderId(): string {
-  orderSequence += 1;
-  const date = new Date().getFullYear();
-  return `CANVIX-${date}-${String(orderSequence).padStart(6, "0")}`;
-}
-
 app.post("/api/orders", async (req, res) => {
   const content = await loadContent();
   const body = req.body as Record<string, unknown>;
@@ -136,7 +136,8 @@ app.post("/api/orders", async (req, res) => {
   if (!fullName || !/^[^\s@]+@(gmail|googlemail)\.com$/i.test(gmail) || !book) {
     return res.status(400).json({ error: "Please provide valid customer and book information." });
   }
-  if (!(paymentMethod === "bkash" || paymentMethod === "rocket")) {
+  const selectedPayment = content.paymentMethods.find((method) => method.id === paymentMethod && method.enabled);
+  if (!selectedPayment) {
     return res.status(400).json({ error: "Please select a valid payment method." });
   }
   if (!/^01[3-9]\d{8}$/.test(senderMobile) || transactionId.length < 4 || paymentAmount !== book.priceBdt) {
@@ -174,7 +175,7 @@ app.post("/api/orders", async (req, res) => {
         `Customer Gmail: ${gmail}`,
         `Selected Book: ${book.title.en}`,
         `Book Price: BDT ${book.priceBdt}`,
-        `Payment Method: ${paymentMethod}`,
+        `Payment Method: ${selectedPayment.name} (${paymentMethod})`,
         `Sender Mobile Number: ${senderMobile}`,
         `Transaction ID: ${transactionId}`,
         `Payment Amount: BDT ${paymentAmount}`,
@@ -189,6 +190,10 @@ app.post("/api/orders", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Canvix Store API listening on http://localhost:${port}`);
-});
+if (!process.env.VERCEL && !process.env.NETLIFY) {
+  app.listen(port, () => {
+    console.log(`Canvix Store API listening on http://localhost:${port}`);
+  });
+}
+
+export default app;

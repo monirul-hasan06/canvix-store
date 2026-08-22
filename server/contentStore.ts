@@ -1,18 +1,20 @@
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { books as seedBooks } from "../src/data/books";
-import { PAYMENT_NUMBERS } from "../src/data/site";
+import { DEFAULT_PAYMENT_METHODS, type PaymentOption } from "../src/data/site";
+import { type SiteCopy } from "../src/i18n/dictionary";
 import type { Book } from "../src/types/book";
 
-export type Category = { id: string; name: { bn: string; en: string } };
+export type Category = { id: string; name: { bn: string; en: string }; visible?: boolean };
 
 export type ContentStore = {
   version: number;
   updatedAt: string;
   books: Book[];
   categories: Category[];
-  paymentNumbers: typeof PAYMENT_NUMBERS;
+  paymentMethods: PaymentOption[];
   showCategories: boolean;
+  siteCopy: SiteCopy;
 };
 
 const storePath = resolve(process.env.CONTENT_STORE_PATH || "server/data/content.json");
@@ -22,7 +24,7 @@ const initialStore = (): ContentStore => ({
   updatedAt: new Date().toISOString(),
   books: seedBooks,
   categories: [
-    { id: "self-development", name: { bn: "আত্মউন্নয়ন", en: "Self Development" } },
+    { id: "self-development", name: { bn: "আত্মউন্নয়ন", en: "Self Development" }, visible: true },
     { id: "programming", name: { bn: "প্রোগ্রামিং", en: "Programming" } },
     { id: "web-development", name: { bn: "ওয়েব ডেভেলপমেন্ট", en: "Web Development" } },
     { id: "business", name: { bn: "ব্যবসা", en: "Business" } },
@@ -32,15 +34,20 @@ const initialStore = (): ContentStore => ({
     { id: "career", name: { bn: "ক্যারিয়ার", en: "Career" } },
     { id: "other", name: { bn: "অন্যান্য", en: "Other" } },
   ],
-  paymentNumbers: PAYMENT_NUMBERS,
+  paymentMethods: DEFAULT_PAYMENT_METHODS,
   showCategories: true,
+  siteCopy: {},
 });
 
 export async function loadContent(): Promise<ContentStore> {
   try {
     const parsed = JSON.parse(await readFile(storePath, "utf8")) as ContentStore;
-    if (!Array.isArray(parsed.books) || !Array.isArray(parsed.categories) || !parsed.paymentNumbers) throw new Error("Invalid content store");
-    return { ...parsed, showCategories: parsed.showCategories !== false };
+    if (!Array.isArray(parsed.books) || !Array.isArray(parsed.categories)) throw new Error("Invalid content store");
+    const legacy = (parsed as ContentStore & { paymentNumbers?: Record<string, string> }).paymentNumbers;
+    const paymentMethods = Array.isArray(parsed.paymentMethods) ? parsed.paymentMethods : Object.entries(legacy || {}).map(([id, number]) => ({ id, name: id === "bkash" ? "bKash" : id === "rocket" ? "Rocket" : id, number, enabled: true }));
+    if (!paymentMethods.length) throw new Error("Invalid payment methods");
+    const categories = parsed.categories.map((category) => ({ ...category, visible: category.visible !== false }));
+    return { ...parsed, categories, paymentMethods, siteCopy: parsed.siteCopy || {}, showCategories: parsed.showCategories !== false };
   } catch {
     const seeded = initialStore();
     await saveContent(seeded);

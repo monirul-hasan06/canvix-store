@@ -10,7 +10,7 @@ export function CategoriesPage() {
   const { t, loc } = useLanguage();
   const { books, categories } = useContent();
   const { id } = useParams();
-  const selected = categories.find((c) => c.id === id);
+  const selected = categories.find((c) => c.id === id && c.visible !== false);
 
   if (id && !selected) {
     return (
@@ -54,7 +54,7 @@ export function CategoriesPage() {
         <h1 className="font-serif text-4xl">{t("categories")}</h1>
         <p className="mt-3 max-w-2xl text-stone-600">{t("categoriesIntro")}</p>
         <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {categories.map((cat) => (
+          {categories.filter((cat) => cat.visible !== false).map((cat) => (
             <li key={cat.id}>
               <Link
                 to={`/categories/${cat.id}`}

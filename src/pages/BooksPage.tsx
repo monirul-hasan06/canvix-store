@@ -46,7 +46,7 @@ export function BooksPage() {
               onChange={(e) => setCategory(e.target.value as CategoryId | "all")}
             >
               <option value="all">{t("allCategories")}</option>
-              {categories.map((c) => (
+              {categories.filter((c) => c.visible !== false).map((c) => (
                 <option key={c.id} value={c.id}>
                   {loc(c.name)} ({getBooksByCategory(c.id, books).length})
                 </option>

@@ -17,7 +17,7 @@ export function CheckoutPage() {
   const { slug } = useParams();
   const { t, loc } = useLanguage();
   const navigate = useNavigate();
-  const { books, categories } = useContent();
+  const { books, categories, paymentMethods } = useContent();
   const book = slug ? getBookBySlug(slug, books) : undefined;
 
   const [name, setName] = useState("");
@@ -97,7 +97,7 @@ export function CheckoutPage() {
       const state: OrderSuccessState = {
         orderId: data.orderId,
         bookTitle: loc(book.title),
-        paymentMethod: method === "rocket" ? "Rocket" : "bKash",
+        paymentMethod: paymentMethods.find((payment) => payment.id === method)?.name || method,
         paymentAmount: book.priceBdt,
         gmail: email.trim(),
       };
@@ -137,7 +137,7 @@ export function CheckoutPage() {
           <div className="space-y-8 lg:col-span-3">
             <section>
               <h2 className="mb-4 font-serif text-2xl">{t("paymentMethods")}</h2>
-              <PaymentCards />
+                <PaymentCards />
             </section>
 
             <section>
@@ -207,8 +207,7 @@ export function CheckoutPage() {
                     onChange={(e) => setMethod(e.target.value as PaymentMethod | "")}
                   >
                     <option value="">—</option>
-                    <option value="bkash">bKash</option>
-                    <option value="rocket">Rocket</option>
+                    {paymentMethods.filter((payment) => payment.enabled).map((payment) => <option key={payment.id} value={payment.id}>{payment.name}</option>)}
                   </Select>
                 </Field>
                 <Field label={t("senderMobile")} htmlFor="sender" error={errors.sender}>

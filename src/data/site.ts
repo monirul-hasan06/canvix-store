@@ -7,4 +7,16 @@ export const PAYMENT_NUMBERS = {
   rocket: "01318080805",
 } as const;
 
-export type PaymentMethod = keyof typeof PAYMENT_NUMBERS;
+export type PaymentOption = {
+  id: string;
+  name: string;
+  number: string;
+  enabled: boolean;
+};
+
+export const DEFAULT_PAYMENT_METHODS: PaymentOption[] = [
+  { id: "bkash", name: "bKash", number: PAYMENT_NUMBERS.bkash, enabled: true },
+  { id: "rocket", name: "Rocket", number: PAYMENT_NUMBERS.rocket, enabled: true },
+];
+
+export type PaymentMethod = string;

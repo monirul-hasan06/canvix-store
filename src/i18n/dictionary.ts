@@ -262,6 +262,12 @@ export const dictionary = {
 
 export type DictKey = keyof typeof dictionary.en;
 
+export type SiteCopy = Partial<Record<DictKey, { bn: string; en: string }>>;
+
+export const defaultSiteCopy = Object.fromEntries(
+  Object.keys(dictionary.en).map((key) => [key, { bn: dictionary.bn[key as DictKey], en: dictionary.en[key as DictKey] }]),
+) as Record<DictKey, { bn: string; en: string }>;
+
 export function translate(lang: Lang, key: DictKey): string {
   return dictionary[lang][key];
 }

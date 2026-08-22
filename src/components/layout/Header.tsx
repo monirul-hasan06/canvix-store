@@ -13,7 +13,7 @@ const links = [
 ];
 
 export function Header() {
-  const { t, lang, setLang } = useLanguage();
+  const { t, lang, setLang, theme, toggleTheme } = useLanguage();
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
@@ -54,6 +54,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <button type="button" className={`theme-toggle ${theme === "dark" ? "is-dark" : ""}`} onClick={toggleTheme} aria-label={theme === "dark" ? "Use light theme" : "Use dark theme"} aria-pressed={theme === "dark"} title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}><span aria-hidden>{theme === "dark" ? "☾" : "☼"}</span><span className="theme-toggle__thumb" aria-hidden /></button>
           <div
             className="flex rounded-full border border-stone-300 bg-white p-0.5 text-xs font-medium"
             role="group"

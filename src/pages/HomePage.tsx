@@ -78,7 +78,7 @@ export function HomePage() {
           <h2 className="font-serif text-3xl">{t("categories")}</h2>
           <p className="mt-2 max-w-2xl text-stone-600">{t("categoriesIntro")}</p>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((cat) => {
+            {categories.filter((cat) => cat.visible !== false).map((cat) => {
               const count = getBooksByCategory(cat.id, books).length;
               return (
                 <li key={cat.id}>

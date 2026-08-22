@@ -23,6 +23,67 @@ body {
   font-family: var(--font-sans);
 }
 
+html[data-theme="dark"] body {
+  background: #1c1917;
+  color: #f5f5f4;
+}
+
+html[data-theme="dark"] .bg-white {
+  background-color: #292524;
+}
+
+html[data-theme="dark"] .bg-\[\#f7f3ec\]\/90 {
+  background-color: rgb(28 25 23 / 90%);
+}
+
+html[data-theme="dark"] .text-stone-900,
+html[data-theme="dark"] .text-stone-800,
+html[data-theme="dark"] .text-stone-700 {
+  color: #f5f5f4;
+}
+
+html[data-theme="dark"] .text-stone-600,
+html[data-theme="dark"] .text-stone-500 {
+  color: #d6d3d1;
+}
+
+html[data-theme="dark"] .border-stone-200,
+html[data-theme="dark"] .border-stone-300 {
+  border-color: #57534e;
+}
+
+html[data-theme="dark"] .admin-shell .bg-white,
+html[data-theme="dark"] .admin-shell .bg-white\/95 {
+  background-color: #292524;
+}
+
+html[data-theme="dark"] .admin-shell .bg-amber-50\/60 {
+  background-color: #332b1f;
+}
+
+html[data-theme="dark"] .admin-shell .bg-stone-100,
+html[data-theme="dark"] .admin-shell .hover\:bg-stone-100:hover,
+html[data-theme="dark"] .admin-shell .hover\:bg-stone-50:hover {
+  background-color: #3c3835;
+}
+
+html[data-theme="dark"] .admin-shell .border-amber-200 {
+  border-color: #8a6a2d;
+}
+
+html[data-theme="dark"] .admin-shell input:not([type="checkbox"]),
+html[data-theme="dark"] .admin-shell textarea,
+html[data-theme="dark"] .admin-shell select {
+  border-color: #57534e;
+  background-color: #1c1917;
+  color: #f5f5f4;
+}
+
+html[data-theme="dark"] .admin-shell option {
+  background-color: #292524;
+  color: #f5f5f4;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -40,4 +101,42 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-gold);
   outline-offset: 3px;
+}
+
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  height: 2rem;
+  width: 3.75rem;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #d6d3d1;
+  border-radius: 999px;
+  background: #f5f5f4;
+  padding: 0 0.45rem;
+  color: #57534e;
+  font-size: 0.9rem;
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+
+.theme-toggle__thumb {
+  position: absolute;
+  left: 0.2rem;
+  height: 1.55rem;
+  width: 1.55rem;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgb(28 25 23 / 20%);
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.theme-toggle.is-dark {
+  border-color: #78716c;
+  background: #292524;
+  color: #fde68a;
+}
+
+.theme-toggle.is-dark .theme-toggle__thumb {
+  transform: translateX(1.75rem);
+  background: #44403c;
 }

@@ -11,11 +11,11 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <LanguageProvider>
-          <ContentProvider>
+        <ContentProvider>
+          <LanguageProvider>
             <App />
-          </ContentProvider>
-        </LanguageProvider>
+          </LanguageProvider>
+        </ContentProvider>
       </BrowserRouter>
     </HelmetProvider>
   </StrictMode>,
