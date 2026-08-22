@@ -190,11 +190,11 @@
       "en": "Digital PDF bookstore"
     },
     "heroTitle": {
-      "bn": "বই কিনুন। পেমেন্ট পাঠান। ইমেইলে পিডিএফ পান।",
+      "bn": "পছন্দের বই বেছে নিন। পেমেন্ট সম্পন্ন করুন। ইমেইলে পিডিএফ পেয়ে যান।",
       "en": "Choose a book. Send payment. Receive the PDF by email."
     },
     "heroBody": {
-      "bn": "ক্যানভিক্স স্টোর একটি ডিজিটাল মার্কেটপ্লেস। আপনি বই বেছে নিয়ে বিকাশ বা রকেটে টাকা পাঠান, ফর্ম পূরণ করেন—মালিক হাতে যাচাই করে আপনার জিমেইলে পিডিএফ পাঠান।",
+      "bn": "ক্যানভিক্স স্টোর একটি ডিজিটাল মার্কেটপ্লেস। আপনি বই বেছে নিয়ে বিকাশ বা রকেটে টাকা পাঠান, ফর্ম পূরণ করেন, Canvix Team যাচাই করে আপনার জিমেইলে পিডিএফ পাঠিয়ে দিবে।",
       "en": "Canvix Store is a digital marketplace. You pick a title, send bKash or Rocket, submit the order form, and the owner verifies payment by hand, then emails the PDF to your Gmail."
     },
     "browseBooks": {
@@ -266,7 +266,7 @@
       "en": "We Verify Your Payment"
     },
     "how4b": {
-      "bn": "মালিক নিজে লেনদেন মিলিয়ে দেখেন। স্বয়ংক্রিয় যাচাই নেই।",
+      "bn": "Canvix Team নিজে লেনদেন মিলিয়ে দেখেন। স্বয়ংক্রিয় যাচাই নেই।",
       "en": "The store owner checks the transaction manually. There is no automatic verification."
     },
     "how5t": {
@@ -286,7 +286,7 @@
       "en": "How do I get the PDF?"
     },
     "faq1a": {
-      "bn": "ওয়েবসাইট থেকে ডাউনলোড হয় না। পেমেন্ট যাচাইয়ের পর মালিক আপনার জিমেইলে পিডিএফ পাঠাবেন।",
+      "bn": "ওয়েবসাইট থেকে ডাউনলোড হয় না। পেমেন্ট যাচাইয়ের পর Canvix Team আপনার জিমেইলে পিডিএফ পাঠাবেন।",
       "en": "There is no download on this website. After payment is verified, the owner emails the PDF to the Gmail you submitted."
     },
     "faq2q": {
@@ -310,8 +310,8 @@
       "en": "How long does it take?"
     },
     "faq4a": {
-      "bn": "মালিক লেনদেন দেখে জবাব দেন। সাধারণত জিমেইল চেক করুন এবং স্প্যাম ফোল্ডারও দেখুন।",
-      "en": "The owner reviews the transaction and replies by Gmail. Check inbox and spam."
+      "bn": "Canvix Team লেনদেন দেখে জবাব দেন। সাধারণত জিমেইল চেক করুন এবং স্প্যাম ফোল্ডারও দেখুন।",
+      "en": "The Canvix Team reviews the transaction and replies by Gmail. Check inbox and spam."
     },
     "faq5q": {
       "bn": "কোন ইমেইল ব্যবহার করব?",
