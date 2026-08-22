@@ -11,8 +11,6 @@ import { BD_MOBILE_RE, formatBdt, GMAIL_RE } from "../lib/formatMoney";
 import type { OrderSuccessState } from "./OrderSuccessPage";
 import { useContent } from "../context/ContentContext";
 
-const startedAt = Date.now();
-
 export function CheckoutPage() {
   const { slug } = useParams();
   const { t, loc } = useLanguage();
@@ -28,6 +26,7 @@ export function CheckoutPage() {
   const [amount, setAmount] = useState(book ? String(book.priceBdt) : "");
   const [message, setMessage] = useState("");
   const [honeypot, setHoneypot] = useState("");
+  const [startedAt] = useState(() => Date.now());
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
@@ -88,7 +87,13 @@ export function CheckoutPage() {
           formStartedAt: startedAt,
         }),
       });
-      const data = (await res.json()) as { orderId?: string; error?: string };
+      const responseText = await res.text();
+      let data: { orderId?: string; error?: string } = {};
+      try {
+        data = responseText ? JSON.parse(responseText) as { orderId?: string; error?: string } : {};
+      } catch {
+        data = { error: `Request failed with status ${res.status}.` };
+      }
       if (!res.ok || !data.orderId) {
         setFormError(data.error || t("submitError"));
         setSubmitting(false);
