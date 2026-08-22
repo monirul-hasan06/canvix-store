@@ -1,16 +1,246 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" role="img" aria-label="How to be an Alpha Male book cover">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1c1917"/>
-      <stop offset="100%" stop-color="#44403c"/>
+      <stop offset="0%" stop-color="#090909"/>
+      <stop offset="55%" stop-color="#1c1917"/>
+      <stop offset="100%" stop-color="#3b3025"/>
     </linearGradient>
+
+    <radialGradient id="glow" cx="70%" cy="65%" r="55%">
+      <stop offset="0%" stop-color="#8f6b3d" stop-opacity=".35"/>
+      <stop offset="55%" stop-color="#33291f" stop-opacity=".12"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f0c878"/>
+      <stop offset="50%" stop-color="#c89443"/>
+      <stop offset="100%" stop-color="#f1d08a"/>
+    </linearGradient>
+
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="5" stdDeviation="6"
+                    flood-color="#000000" flood-opacity=".65"/>
+    </filter>
+
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
   </defs>
+
+  <!-- Background -->
   <rect width="600" height="800" fill="url(#bg)"/>
-  <rect x="36" y="36" width="528" height="728" fill="none" stroke="#d6a15b" stroke-width="1.5"/>
-  <text x="300" y="140" text-anchor="middle" fill="#d6a15b" font-family="Georgia, serif" font-size="18" letter-spacing="8">CANVIX STORE</text>
-  <text x="300" y="340" text-anchor="middle" fill="#f7f3ec" font-family="Georgia, serif" font-size="48">How to be an</text>
-  <text x="300" y="410" text-anchor="middle" fill="#f7f3ec" font-family="Georgia, serif" font-size="56">Alpha Male</text>
-  <line x1="220" y1="460" x2="380" y2="460" stroke="#d6a15b" stroke-width="1"/>
-  <text x="300" y="510" text-anchor="middle" fill="#a8a29e" font-family="Georgia, serif" font-size="20" font-style="italic">Confidence, presence, self-mastery</text>
-  <text x="300" y="700" text-anchor="middle" fill="#d6a15b" font-family="Georgia, serif" font-size="16" letter-spacing="4">DIGITAL EDITION · ó50</text>
+  <rect width="600" height="800" fill="url(#glow)"/>
+
+  <!-- Atmospheric glow -->
+  <ellipse cx="430" cy="570" rx="180" ry="100"
+           fill="#c89443" opacity=".12" filter="url(#softGlow)"/>
+
+  <!-- Outer frame -->
+  <rect x="28" y="28" width="544" height="744"
+        rx="2" fill="none"
+        stroke="url(#gold)" stroke-width="2"/>
+
+  <rect x="37" y="37" width="526" height="726"
+        fill="none"
+        stroke="#8b642f"
+        stroke-width=".8"
+        opacity=".8"/>
+
+  <!-- Brand -->
+  <text x="300" y="92"
+        text-anchor="middle"
+        fill="url(#gold)"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="17"
+        letter-spacing="7">
+    CANVIX STORE
+  </text>
+
+  <!-- Small emblem -->
+  <circle cx="300" cy="125" r="22"
+          fill="none"
+          stroke="#c89443"
+          stroke-width="1"/>
+
+  <path d="M300 108
+           L305 120
+           L318 120
+           L308 128
+           L312 141
+           L300 133
+           L288 141
+           L292 128
+           L282 120
+           L295 120 Z"
+        fill="url(#gold)"/>
+
+  <!-- Title -->
+  <text x="300" y="225"
+        text-anchor="middle"
+        fill="#f7f3ec"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="32">
+    How to be an
+  </text>
+
+  <text x="300" y="295"
+        text-anchor="middle"
+        fill="#ffffff"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="51"
+        font-weight="bold">
+    Alpha Male
+  </text>
+
+  <!-- Divider -->
+  <line x1="210" y1="330"
+        x2="390" y2="330"
+        stroke="url(#gold)"
+        stroke-width="1"/>
+
+  <circle cx="300" cy="330" r="3"
+          fill="#d6a15b"/>
+
+  <!-- Subtitle -->
+  <text x="300" y="370"
+        text-anchor="middle"
+        fill="#cfc6b9"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="17"
+        font-style="italic">
+    Confidence, presence, self-mastery
+  </text>
+
+  <!-- Mountain silhouette -->
+  <path d="M55 690
+           L145 595
+           L205 650
+           L300 505
+           L390 620
+           L475 535
+           L545 690 Z"
+        fill="#171411"
+        opacity=".95"/>
+
+  <path d="M205 650
+           L300 505
+           L335 560
+           L300 540
+           L260 620 Z"
+        fill="#2b241d"
+        opacity=".8"/>
+
+  <path d="M390 620
+           L475 535
+           L505 570
+           L475 555
+           L430 615 Z"
+        fill="#29231d"
+        opacity=".85"/>
+
+  <!-- Rock ledge -->
+  <path d="M65 680
+           Q155 650 240 674
+           Q330 696 410 680
+           L520 715
+           L520 760
+           L65 760 Z"
+        fill="#0b0a09"/>
+
+  <!-- Lion silhouette -->
+  <g fill="#0a0908" stroke="#17130f" stroke-width="2"
+     filter="url(#shadow)">
+
+    <!-- Body -->
+    <path d="M115 640
+             Q115 600 145 570
+             Q175 540 215 558
+             Q245 570 260 600
+             Q270 620 260 650
+             L225 655
+             Q210 620 185 615
+             Q155 610 145 645 Z"/>
+
+    <!-- Back -->
+    <path d="M140 585
+             Q185 545 230 565
+             Q255 575 275 605
+             L250 620
+             Q220 585 175 590 Z"/>
+
+    <!-- Head -->
+    <circle cx="255" cy="555" r="42"/>
+
+    <!-- Mane -->
+    <path d="M218 555
+             Q210 510 245 490
+             Q280 475 315 505
+             Q335 530 320 565
+             Q310 600 275 608
+             Q235 600 218 555 Z"/>
+
+    <!-- Face -->
+    <path d="M244 535
+             Q255 520 270 535
+             L275 560
+             Q265 575 250 560 Z"/>
+
+    <!-- Ear -->
+    <path d="M235 515
+             L225 495
+             Q242 492 252 508 Z"/>
+
+    <path d="M282 510
+             L300 492
+             Q306 510 295 520 Z"/>
+
+    <!-- Front legs -->
+    <path d="M238 595
+             L250 595
+             L248 660
+             L230 660 Z"/>
+
+    <path d="M265 595
+             L278 592
+             L290 660
+             L272 660 Z"/>
+
+    <!-- Rear legs -->
+    <path d="M145 600
+             L160 605
+             L150 655
+             L132 655 Z"/>
+
+    <!-- Tail -->
+    <path d="M145 605
+             Q105 620 95 650
+             Q88 670 105 677
+             Q112 670 107 660
+             Q120 638 155 630 Z"/>
+  </g>
+
+  <!-- Lion eye -->
+  <circle cx="263" cy="548" r="3" fill="#d6a15b"/>
+
+  <!-- Golden light behind lion -->
+  <circle cx="450" cy="600" r="3" fill="#d6a15b"/>
+  <circle cx="470" cy="575" r="2" fill="#d6a15b"/>
+  <circle cx="425" cy="625" r="2" fill="#d6a15b"/>
+
+  <!-- Bottom divider -->
+  <line x1="165" y1="710"
+        x2="435" y2="710"
+        stroke="#8b642f"
+        stroke-width="1"/>
+
+  <!-- Edition -->
+  <text x="300" y="742"
+        text-anchor="middle"
+        fill="url(#gold)"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14"
+        letter-spacing="4">
+    DIGITAL EDITION â€¢ à§³50
+  </text>
 </svg>
