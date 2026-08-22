@@ -30,7 +30,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-stone-200/80 bg-[#f7f3ec]/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <NavLink
           to="/"
           className="shrink-0 font-serif text-lg font-semibold tracking-tight text-stone-900 sm:text-2xl"
@@ -53,7 +53,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2">
           <button type="button" className={`theme-toggle ${theme === "dark" ? "is-dark" : ""}`} onClick={toggleTheme} aria-label={theme === "dark" ? "Use light theme" : "Use dark theme"} aria-pressed={theme === "dark"} title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}><span aria-hidden>{theme === "dark" ? "☾" : "☼"}</span><span className="theme-toggle__thumb" aria-hidden /></button>
           <div
             className="flex rounded-full border border-stone-300 bg-white p-0.5 text-xs font-medium"
