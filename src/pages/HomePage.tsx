@@ -4,14 +4,14 @@ import { BookGrid } from "../components/books/BookGrid";
 import { HowItWorksList } from "../components/home/HowItWorksList";
 import { Seo } from "../components/Seo";
 import { ButtonLink } from "../components/ui/Button";
-import { categories, getBooksByCategory, getFeaturedBooks } from "../data/books";
+import { getBooksByCategory, getFeaturedBooks } from "../data/books";
 import { STORE_NAME } from "../data/site";
 import { useLanguage } from "../i18n/LanguageContext";
 import { useContent } from "../context/ContentContext";
 
 export function HomePage() {
   const { t, loc } = useLanguage();
-  const { books } = useContent();
+  const { books, categories, showCategories } = useContent();
   const featured = getFeaturedBooks(books);
 
   const faq = [
@@ -73,7 +73,7 @@ export function HomePage() {
         <BookGrid books={books} />
       </section>
 
-      <section className="border-t border-stone-200/80 bg-[#efe8dc]/40 py-14" id="categories">
+      {showCategories ? <section className="border-t border-stone-200/80 bg-[#efe8dc]/40 py-14" id="categories">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <h2 className="font-serif text-3xl">{t("categories")}</h2>
           <p className="mt-2 max-w-2xl text-stone-600">{t("categoriesIntro")}</p>
@@ -96,7 +96,7 @@ export function HomePage() {
             })}
           </ul>
         </div>
-      </section>
+      </section> : null}
 
       <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6" id="how-it-works">
         <h2 className="mb-8 font-serif text-3xl">{t("howTitle")}</h2>

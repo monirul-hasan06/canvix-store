@@ -4,11 +4,15 @@ import { books as seedBooks } from "../src/data/books";
 import { PAYMENT_NUMBERS } from "../src/data/site";
 import type { Book } from "../src/types/book";
 
+export type Category = { id: string; name: { bn: string; en: string } };
+
 export type ContentStore = {
   version: number;
   updatedAt: string;
   books: Book[];
+  categories: Category[];
   paymentNumbers: typeof PAYMENT_NUMBERS;
+  showCategories: boolean;
 };
 
 const storePath = resolve(process.env.CONTENT_STORE_PATH || "server/data/content.json");
@@ -17,14 +21,26 @@ const initialStore = (): ContentStore => ({
   version: 1,
   updatedAt: new Date().toISOString(),
   books: seedBooks,
+  categories: [
+    { id: "self-development", name: { bn: "আত্মউন্নয়ন", en: "Self Development" } },
+    { id: "programming", name: { bn: "প্রোগ্রামিং", en: "Programming" } },
+    { id: "web-development", name: { bn: "ওয়েব ডেভেলপমেন্ট", en: "Web Development" } },
+    { id: "business", name: { bn: "ব্যবসা", en: "Business" } },
+    { id: "education", name: { bn: "শিক্ষা", en: "Education" } },
+    { id: "technology", name: { bn: "প্রযুক্তি", en: "Technology" } },
+    { id: "productivity", name: { bn: "প্রোডাক্টিভিটি", en: "Productivity" } },
+    { id: "career", name: { bn: "ক্যারিয়ার", en: "Career" } },
+    { id: "other", name: { bn: "অন্যান্য", en: "Other" } },
+  ],
   paymentNumbers: PAYMENT_NUMBERS,
+  showCategories: true,
 });
 
 export async function loadContent(): Promise<ContentStore> {
   try {
     const parsed = JSON.parse(await readFile(storePath, "utf8")) as ContentStore;
-    if (!Array.isArray(parsed.books) || !parsed.paymentNumbers) throw new Error("Invalid content store");
-    return parsed;
+    if (!Array.isArray(parsed.books) || !Array.isArray(parsed.categories) || !parsed.paymentNumbers) throw new Error("Invalid content store");
+    return { ...parsed, showCategories: parsed.showCategories !== false };
   } catch {
     const seeded = initialStore();
     await saveContent(seeded);

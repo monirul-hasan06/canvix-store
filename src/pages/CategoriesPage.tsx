@@ -1,14 +1,14 @@
 import { Link, useParams } from "react-router-dom";
 import { BookGrid } from "../components/books/BookGrid";
 import { Seo } from "../components/Seo";
-import { categories, getBooksByCategory } from "../data/books";
+import { getBooksByCategory } from "../data/books";
 import { useLanguage } from "../i18n/LanguageContext";
 import type { CategoryId } from "../types/book";
 import { useContent } from "../context/ContentContext";
 
 export function CategoriesPage() {
   const { t, loc } = useLanguage();
-  const { books } = useContent();
+  const { books, categories } = useContent();
   const { id } = useParams();
   const selected = categories.find((c) => c.id === id);
 

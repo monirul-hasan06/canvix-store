@@ -5,9 +5,11 @@ import { useLanguage } from "../../i18n/LanguageContext";
 import { formatBdt } from "../../lib/formatMoney";
 import type { Book } from "../../types/book";
 import { ButtonLink } from "../ui/Button";
+import { useContent } from "../../context/ContentContext";
 
 export function BookCard({ book }: { book: Book }) {
   const { t, loc } = useLanguage();
+  const { categories } = useContent();
   const discount = discountPercent(book);
 
   return (
@@ -27,7 +29,7 @@ export function BookCard({ book }: { book: Book }) {
       </Link>
       <div className="flex flex-1 flex-col gap-3 p-5">
         <p className="text-xs uppercase tracking-[0.14em] text-amber-800">
-          {loc(getCategoryName(book.category))}
+          {loc(getCategoryName(book.category, categories))}
         </p>
         <h3 className="font-serif text-xl leading-snug text-stone-900">
           <Link to={`/books/${book.slug}`} className="hover:text-amber-900">

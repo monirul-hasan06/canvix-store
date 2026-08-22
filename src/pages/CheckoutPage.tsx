@@ -17,7 +17,7 @@ export function CheckoutPage() {
   const { slug } = useParams();
   const { t, loc } = useLanguage();
   const navigate = useNavigate();
-  const { books } = useContent();
+  const { books, categories } = useContent();
   const book = slug ? getBookBySlug(slug, books) : undefined;
 
   const [name, setName] = useState("");
@@ -129,7 +129,7 @@ export function CheckoutPage() {
                 className="mt-4 w-full rounded-xl object-cover"
               />
               <h2 className="mt-4 font-serif text-2xl">{loc(book.title)}</h2>
-              <p className="mt-1 text-sm text-stone-500">{loc(getCategoryName(book.category))}</p>
+              <p className="mt-1 text-sm text-stone-500">{loc(getCategoryName(book.category, categories))}</p>
               <p className="mt-3 text-2xl font-semibold">{formatBdt(book.priceBdt)}</p>
             </div>
           </aside>

@@ -16,7 +16,7 @@ import { useContent } from "../context/ContentContext";
 export function BookDetailsPage() {
   const { slug } = useParams();
   const { t, loc } = useLanguage();
-  const { books } = useContent();
+  const { books, categories } = useContent();
   const book = slug ? getBookBySlug(slug, books) : undefined;
 
   if (!book) {
@@ -58,7 +58,7 @@ export function BookDetailsPage() {
         </div>
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-800">
-            {loc(getCategoryName(book.category))}
+            {loc(getCategoryName(book.category, categories))}
           </p>
           <h1 className="mt-3 font-serif text-4xl leading-tight">{loc(book.title)}</h1>
           <p className="mt-2 text-sm text-stone-500">

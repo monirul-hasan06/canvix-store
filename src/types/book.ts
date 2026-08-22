@@ -5,16 +5,7 @@ export type Localized = {
   en: string;
 };
 
-export type CategoryId =
-  | "self-development"
-  | "programming"
-  | "web-development"
-  | "business"
-  | "education"
-  | "technology"
-  | "productivity"
-  | "career"
-  | "other";
+export type CategoryId = string;
 
 export type Book = {
   id: string;

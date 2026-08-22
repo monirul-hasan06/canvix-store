@@ -12,8 +12,8 @@ export const categories: { id: CategoryId; name: Localized }[] = [
   { id: "other", name: { bn: "অন্যান্য", en: "Other" } },
 ];
 
-export function getCategoryName(id: CategoryId): Localized {
-  return categories.find((c) => c.id === id)?.name ?? { bn: id, en: id };
+export function getCategoryName(id: CategoryId, categoryList = categories): Localized {
+  return categoryList.find((c) => c.id === id)?.name ?? { bn: id, en: id };
 }
 
 /**
@@ -84,16 +84,16 @@ export function discountPercent(book: Book): number | null {
   return Math.round((1 - book.priceBdt / book.originalPriceBdt) * 100);
 }
 
-export function searchBooks(query: string, lang: "bn" | "en", catalog = books): Book[] {
+export function searchBooks(query: string, lang: "bn" | "en", catalog = books, categoryList = categories): Book[] {
   const q = query.trim().toLowerCase();
-  if (!q) return books;
+  if (!q) return catalog;
   return catalog.filter((book) => {
     const hay = [
       book.title[lang],
       book.title.en,
       book.author[lang],
       book.shortDescription[lang],
-      getCategoryName(book.category)[lang],
+      getCategoryName(book.category, categoryList)[lang],
       ...book.tags.map((t) => t[lang]),
     ]
       .join(" ")

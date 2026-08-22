@@ -4,16 +4,17 @@ import express from "express";
 import rateLimit from "express-rate-limit";
 import nodemailer from "nodemailer";
 import { loadContent, saveContent, sanitizeBook, validateBook } from "./contentStore";
+import { mkdir, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
 
 const app = express();
 const port = Number(process.env.PORT || 3001);
 const ownerEmail = process.env.OWNER_EMAIL || "dev.get.in.touch@gmail.com";
-let orderSequence = 0;
 const sessions = new Map<string, number>();
 const adminEmail = (process.env.ADMIN_EMAIL || ownerEmail).toLowerCase();
 const adminPassword = process.env.ADMIN_PASSWORD;
 
-app.use(express.json({ limit: "16kb" }));
+app.use(express.json({ limit: "8mb" }));
 app.get("/api/content", async (_req, res) => {
   res.json(await loadContent());
 });
@@ -60,13 +61,17 @@ app.get("/api/admin/session", (req, res) => res.json({ authenticated: isAdmin(re
 
 app.put("/api/admin/content", async (req, res) => {
   if (!isAdmin(req)) return res.status(401).json({ error: "Authentication required." });
-  const incoming = req.body as { version?: unknown; books?: unknown; paymentNumbers?: unknown };
-  if (!Number.isInteger(incoming.version) || !Array.isArray(incoming.books) || !incoming.paymentNumbers) {
+  const incoming = req.body as { version?: unknown; books?: unknown; categories?: unknown; paymentNumbers?: unknown; showCategories?: unknown };
+  if (!Number.isInteger(incoming.version) || !Array.isArray(incoming.books) || !Array.isArray(incoming.categories) || !incoming.paymentNumbers || typeof incoming.showCategories !== "boolean") {
     return res.status(400).json({ error: "Invalid content payload." });
   }
   const current = await loadContent();
   if (incoming.version !== current.version) return res.status(409).json({ error: "Content changed. Reload and try again." });
-  if (!incoming.books.every(validateBook)) return res.status(400).json({ error: "One or more books are invalid." });
+  if (!incoming.books.every(validateBook) || !incoming.categories.every((category) => category && typeof category === "object" && typeof (category as { id?: unknown }).id === "string" && (category as { name?: { bn?: unknown; en?: unknown } }).name && typeof (category as { name: { bn?: unknown; en?: unknown } }).name.bn === "string" && typeof (category as { name: { bn?: unknown; en?: unknown } }).name.en === "string")) return res.status(400).json({ error: "Catalog or categories are invalid." });
+  const categories = incoming.categories as { id: string; name: { bn: string; en: string } }[];
+  if (new Set(categories.map((category) => category.id)).size !== categories.length || incoming.books.some((book) => !categories.some((category) => category.id === (book as { category?: unknown }).category))) {
+    return res.status(400).json({ error: "Every book must use one unique existing category." });
+  }
   const numbers = incoming.paymentNumbers as Record<string, unknown>;
   if (!/^01[3-9]\d{8}$/.test(String(numbers.bkash)) || !/^01[3-9]\d{8}$/.test(String(numbers.rocket))) {
     return res.status(400).json({ error: "Payment numbers are invalid." });
@@ -75,11 +80,28 @@ app.put("/api/admin/content", async (req, res) => {
     version: current.version + 1,
     updatedAt: new Date().toISOString(),
     books: incoming.books.map((book) => sanitizeBook(book)),
+    categories: categories.map((category) => ({ id: category.id.trim().slice(0, 100), name: { bn: category.name.bn.trim().slice(0, 200), en: category.name.en.trim().slice(0, 200) } })),
     paymentNumbers: { bkash: String(numbers.bkash), rocket: String(numbers.rocket) } as typeof current.paymentNumbers,
+    showCategories: incoming.showCategories,
   };
   await saveContent(next);
   return res.json(next);
 });
+
+app.post("/api/admin/covers", async (req, res) => {
+  if (!isAdmin(req)) return res.status(401).json({ error: "Authentication required." });
+  const dataUrl = clean(req.body?.dataUrl, 8 * 1024 * 1024);
+  const match = dataUrl.match(/^data:(image\/(?:png|jpeg|webp));base64,([A-Za-z0-9+/=]+)$/);
+  if (!match) return res.status(400).json({ error: "Only PNG, JPEG, and WebP covers are supported." });
+  const file = Buffer.from(match[2], "base64");
+  if (file.length > 5 * 1024 * 1024) return res.status(400).json({ error: "Cover must be 5 MB or smaller." });
+  const extension = match[1].split("/")[1].replace("jpeg", "jpg");
+  const fileName = `cover-${randomBytes(12).toString("hex")}.${extension}`;
+  await mkdir(resolve("public/covers"), { recursive: true });
+  await writeFile(resolve("public/covers", fileName), file);
+  return res.status(201).json({ coverPath: `/covers/${fileName}` });
+});
+
 app.use(
   "/api/orders",
   rateLimit({ windowMs: 15 * 60 * 1000, limit: 5, standardHeaders: "draft-8", legacyHeaders: false }),
@@ -124,13 +146,11 @@ app.post("/api/orders", async (req, res) => {
   const smtpHost = process.env.SMTP_HOST;
   const smtpPort = Number(process.env.SMTP_PORT || 587);
   const smtpUser = process.env.SMTP_USER;
-  const smtpPass = process.env.SMTP_PASS;
+  const smtpPass = process.env.SMTP_PASS?.replace(/\s/g, "");
   if (!smtpHost || !smtpUser || !smtpPass) {
     return res.status(503).json({ error: "Order service is not configured yet." });
   }
 
-  const orderId = nextOrderId();
-  const submittedAt = new Date().toISOString();
   const transporter = nodemailer.createTransport({
     host: smtpHost,
     port: smtpPort,
@@ -139,6 +159,9 @@ app.post("/api/orders", async (req, res) => {
   });
 
   try {
+    await transporter.verify();
+    const orderId = `CANVIX-${new Date().getFullYear()}-${randomBytes(4).toString("hex").toUpperCase()}`;
+    const submittedAt = new Date().toISOString();
     await transporter.sendMail({
       from: smtpUser,
       to: ownerEmail,

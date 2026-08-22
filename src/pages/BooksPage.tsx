@@ -3,7 +3,6 @@ import { BookGrid } from "../components/books/BookGrid";
 import { Seo } from "../components/Seo";
 import { Field, Select, TextInput } from "../components/ui/Field";
 import {
-  categories,
   getBooksByCategory,
   searchBooks,
 } from "../data/books";
@@ -13,17 +12,17 @@ import { useContent } from "../context/ContentContext";
 
 export function BooksPage() {
   const { t, loc, lang } = useLanguage();
-  const { books } = useContent();
+  const { books, categories } = useContent();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryId | "all">("all");
 
   const visible = useMemo(() => {
-    let result = searchBooks(query, lang, books);
+    let result = searchBooks(query, lang, books, categories);
     if (category !== "all") {
       result = result.filter((b) => b.category === category);
     }
     return result;
-  }, [query, category, lang]);
+  }, [query, category, lang, books, categories]);
 
   return (
     <>
