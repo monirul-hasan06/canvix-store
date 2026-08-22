@@ -1,246 +1,558 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" role="img" aria-label="How to be an Alpha Male book cover">
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1200 700"
+     role="img"
+     aria-label="Canvix Store digital PDF book purchasing process">
+
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#090909"/>
-      <stop offset="55%" stop-color="#1c1917"/>
-      <stop offset="100%" stop-color="#3b3025"/>
+      <stop offset="0%" stop-color="#080808"/>
+      <stop offset="55%" stop-color="#181512"/>
+      <stop offset="100%" stop-color="#30261c"/>
     </linearGradient>
 
-    <radialGradient id="glow" cx="70%" cy="65%" r="55%">
-      <stop offset="0%" stop-color="#8f6b3d" stop-opacity=".35"/>
-      <stop offset="55%" stop-color="#33291f" stop-opacity=".12"/>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4d28b"/>
+      <stop offset="45%" stop-color="#c89443"/>
+      <stop offset="100%" stop-color="#f1c875"/>
+    </linearGradient>
+
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#211c17"/>
+      <stop offset="100%" stop-color="#100f0d"/>
+    </linearGradient>
+
+    <radialGradient id="glow" cx="70%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#d6a15b" stop-opacity=".18"/>
+      <stop offset="60%" stop-color="#8c652f" stop-opacity=".05"/>
       <stop offset="100%" stop-color="#000" stop-opacity="0"/>
     </radialGradient>
 
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f0c878"/>
-      <stop offset="50%" stop-color="#c89443"/>
-      <stop offset="100%" stop-color="#f1d08a"/>
-    </linearGradient>
-
     <filter id="shadow">
-      <feDropShadow dx="0" dy="5" stdDeviation="6"
-                    flood-color="#000000" flood-opacity=".65"/>
-    </filter>
-
-    <filter id="softGlow">
-      <feGaussianBlur stdDeviation="12"/>
+      <feDropShadow dx="0" dy="10" stdDeviation="14"
+                    flood-color="#000000" flood-opacity=".55"/>
     </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="600" height="800" fill="url(#bg)"/>
-  <rect width="600" height="800" fill="url(#glow)"/>
+  <!-- ========================= -->
+  <!-- BACKGROUND -->
+  <!-- ========================= -->
 
-  <!-- Atmospheric glow -->
-  <ellipse cx="430" cy="570" rx="180" ry="100"
-           fill="#c89443" opacity=".12" filter="url(#softGlow)"/>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <rect width="1200" height="700" fill="url(#glow)"/>
 
-  <!-- Outer frame -->
-  <rect x="28" y="28" width="544" height="744"
-        rx="2" fill="none"
-        stroke="url(#gold)" stroke-width="2"/>
-
-  <rect x="37" y="37" width="526" height="726"
+  <!-- Border -->
+  <rect x="25" y="25"
+        width="1150" height="650"
+        rx="8"
         fill="none"
-        stroke="#8b642f"
-        stroke-width=".8"
-        opacity=".8"/>
-
-  <!-- Brand -->
-  <text x="300" y="92"
-        text-anchor="middle"
-        fill="url(#gold)"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="17"
-        letter-spacing="7">
-    CANVIX STORE
-  </text>
-
-  <!-- Small emblem -->
-  <circle cx="300" cy="125" r="22"
-          fill="none"
-          stroke="#c89443"
-          stroke-width="1"/>
-
-  <path d="M300 108
-           L305 120
-           L318 120
-           L308 128
-           L312 141
-           L300 133
-           L288 141
-           L292 128
-           L282 120
-           L295 120 Z"
-        fill="url(#gold)"/>
-
-  <!-- Title -->
-  <text x="300" y="225"
-        text-anchor="middle"
-        fill="#f7f3ec"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="32">
-    How to be an
-  </text>
-
-  <text x="300" y="295"
-        text-anchor="middle"
-        fill="#ffffff"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="51"
-        font-weight="bold">
-    Alpha Male
-  </text>
-
-  <!-- Divider -->
-  <line x1="210" y1="330"
-        x2="390" y2="330"
-        stroke="url(#gold)"
+        stroke="#8f672f"
         stroke-width="1"/>
 
-  <circle cx="300" cy="330" r="3"
-          fill="#d6a15b"/>
+  <rect x="35" y="35"
+        width="1130" height="630"
+        rx="6"
+        fill="none"
+        stroke="#d6a15b"
+        stroke-width=".5"
+        opacity=".45"/>
 
-  <!-- Subtitle -->
-  <text x="300" y="370"
-        text-anchor="middle"
-        fill="#cfc6b9"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="17"
-        font-style="italic">
-    Confidence, presence, self-mastery
-  </text>
 
-  <!-- Mountain silhouette -->
-  <path d="M55 690
-           L145 595
-           L205 650
-           L300 505
-           L390 620
-           L475 535
-           L545 690 Z"
-        fill="#171411"
-        opacity=".95"/>
+  <!-- ========================= -->
+  <!-- BRAND -->
+  <!-- ========================= -->
 
-  <path d="M205 650
-           L300 505
-           L335 560
-           L300 540
-           L260 620 Z"
-        fill="#2b241d"
-        opacity=".8"/>
+  <g transform="translate(75 72)">
 
-  <path d="M390 620
-           L475 535
-           L505 570
-           L475 555
-           L430 615 Z"
-        fill="#29231d"
-        opacity=".85"/>
+    <!-- Crown -->
+    <path d="
+      M0 30
+      L9 6
+      L27 23
+      L44 0
+      L61 23
+      L79 6
+      L88 30
+      Z"
+      fill="url(#gold)"/>
 
-  <!-- Rock ledge -->
-  <path d="M65 680
-           Q155 650 240 674
-           Q330 696 410 680
-           L520 715
-           L520 760
-           L65 760 Z"
-        fill="#0b0a09"/>
+    <rect x="7"
+          y="30"
+          width="74"
+          height="8"
+          rx="3"
+          fill="url(#gold)"/>
 
-  <!-- Lion silhouette -->
-  <g fill="#0a0908" stroke="#17130f" stroke-width="2"
-     filter="url(#shadow)">
-
-    <!-- Body -->
-    <path d="M115 640
-             Q115 600 145 570
-             Q175 540 215 558
-             Q245 570 260 600
-             Q270 620 260 650
-             L225 655
-             Q210 620 185 615
-             Q155 610 145 645 Z"/>
-
-    <!-- Back -->
-    <path d="M140 585
-             Q185 545 230 565
-             Q255 575 275 605
-             L250 620
-             Q220 585 175 590 Z"/>
-
-    <!-- Head -->
-    <circle cx="255" cy="555" r="42"/>
-
-    <!-- Mane -->
-    <path d="M218 555
-             Q210 510 245 490
-             Q280 475 315 505
-             Q335 530 320 565
-             Q310 600 275 608
-             Q235 600 218 555 Z"/>
-
-    <!-- Face -->
-    <path d="M244 535
-             Q255 520 270 535
-             L275 560
-             Q265 575 250 560 Z"/>
-
-    <!-- Ear -->
-    <path d="M235 515
-             L225 495
-             Q242 492 252 508 Z"/>
-
-    <path d="M282 510
-             L300 492
-             Q306 510 295 520 Z"/>
-
-    <!-- Front legs -->
-    <path d="M238 595
-             L250 595
-             L248 660
-             L230 660 Z"/>
-
-    <path d="M265 595
-             L278 592
-             L290 660
-             L272 660 Z"/>
-
-    <!-- Rear legs -->
-    <path d="M145 600
-             L160 605
-             L150 655
-             L132 655 Z"/>
-
-    <!-- Tail -->
-    <path d="M145 605
-             Q105 620 95 650
-             Q88 670 105 677
-             Q112 670 107 660
-             Q120 638 155 630 Z"/>
   </g>
 
-  <!-- Lion eye -->
-  <circle cx="263" cy="548" r="3" fill="#d6a15b"/>
+  <text x="190"
+        y="98"
+        fill="url(#gold)"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="31"
+        font-weight="bold"
+        letter-spacing="5">
+    CANVIX
+  </text>
 
-  <!-- Golden light behind lion -->
-  <circle cx="450" cy="600" r="3" fill="#d6a15b"/>
-  <circle cx="470" cy="575" r="2" fill="#d6a15b"/>
-  <circle cx="425" cy="625" r="2" fill="#d6a15b"/>
+  <text x="192"
+        y="124"
+        fill="#bcae9d"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="15"
+        letter-spacing="7">
+    STORE
+  </text>
 
-  <!-- Bottom divider -->
-  <line x1="165" y1="710"
-        x2="435" y2="710"
-        stroke="#8b642f"
+
+  <!-- ========================= -->
+  <!-- MAIN HEADING -->
+  <!-- ========================= -->
+
+  <text x="70"
+        y="205"
+        fill="#f7f3ec"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="43"
+        font-weight="bold">
+    Digital Books.
+  </text>
+
+  <text x="70"
+        y="255"
+        fill="url(#gold)"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="43"
+        font-weight="bold">
+    Delivered Personally.
+  </text>
+
+  <text x="72"
+        y="290"
+        fill="#aaa199"
+        font-family="Arial, sans-serif"
+        font-size="16">
+    Choose your book, complete your payment,
+  </text>
+
+  <text x="72"
+        y="315"
+        fill="#aaa199"
+        font-family="Arial, sans-serif"
+        font-size="16">
+    and our team will verify and deliver it to your Gmail.
+  </text>
+
+
+  <!-- ========================= -->
+  <!-- STEP 1 -->
+  <!-- ========================= -->
+
+  <g filter="url(#shadow)">
+
+    <rect x="60"
+          y="355"
+          width="200"
+          height="190"
+          rx="12"
+          fill="url(#card)"
+          stroke="#60482a"
+          stroke-width="1"/>
+
+    <circle cx="100"
+            cy="395"
+            r="23"
+            fill="#17120d"
+            stroke="url(#gold)"
+            stroke-width="1.5"/>
+
+    <text x="100"
+          y="402"
+          text-anchor="middle"
+          fill="url(#gold)"
+          font-family="Arial, sans-serif"
+          font-size="18"
+          font-weight="bold">
+      01
+    </text>
+
+    <!-- Book icon -->
+    <path d="
+      M90 435
+      Q105 428 120 438
+      Q135 428 150 435
+      L150 480
+      Q135 472 120 482
+      Q105 472 90 480
+      Z"
+      fill="none"
+      stroke="#d6a15b"
+      stroke-width="2"/>
+
+    <line x1="120"
+          y1="437"
+          x2="120"
+          y2="481"
+          stroke="#d6a15b"
+          stroke-width="1.5"/>
+
+    <text x="80"
+          y="515"
+          fill="#f5efe7"
+          font-family="Arial, sans-serif"
+          font-size="16"
+          font-weight="bold">
+      Choose a Book
+    </text>
+
+    <text x="80"
+          y="535"
+          fill="#918a82"
+          font-family="Arial, sans-serif"
+          font-size="12">
+      Browse our PDF books
+    </text>
+
+  </g>
+
+
+  <!-- ========================= -->
+  <!-- ARROW -->
+  <!-- ========================= -->
+
+  <path d="
+    M270 450
+    L300 450"
+    stroke="#c89443"
+    stroke-width="2"/>
+
+  <path d="
+    M294 444
+    L301 450
+    L294 456"
+    fill="none"
+    stroke="#c89443"
+    stroke-width="2"/>
+
+
+  <!-- ========================= -->
+  <!-- STEP 2 -->
+  <!-- ========================= -->
+
+  <g filter="url(#shadow)">
+
+    <rect x="315"
+          y="355"
+          width="200"
+          height="190"
+          rx="12"
+          fill="url(#card)"
+          stroke="#60482a"
+          stroke-width="1"/>
+
+    <circle cx="355"
+            cy="395"
+            r="23"
+            fill="#17120d"
+            stroke="url(#gold)"
+            stroke-width="1.5"/>
+
+    <text x="355"
+          y="402"
+          text-anchor="middle"
+          fill="url(#gold)"
+          font-family="Arial, sans-serif"
+          font-size="18"
+          font-weight="bold">
+      02
+    </text>
+
+    <!-- Payment icon -->
+    <rect x="355"
+          y="430"
+          width="70"
+          height="45"
+          rx="6"
+          fill="#17120d"
+          stroke="#d6a15b"
+          stroke-width="2"/>
+
+    <line x1="355"
+          y1="443"
+          x2="425"
+          y2="443"
+          stroke="#d6a15b"
+          stroke-width="1.5"/>
+
+    <rect x="365"
+          y="455"
+          width="22"
+          height="5"
+          rx="2"
+          fill="#c89443"/>
+
+    <text x="335"
+          y="515"
+          fill="#f5efe7"
+          font-family="Arial, sans-serif"
+          font-size="16"
+          font-weight="bold">
+      Make Payment
+    </text>
+
+    <text x="335"
+          y="535"
+          fill="#918a82"
+          font-family="Arial, sans-serif"
+          font-size="12">
+      Follow the payment info
+    </text>
+
+  </g>
+
+
+  <!-- ========================= -->
+  <!-- ARROW -->
+  <!-- ========================= -->
+
+  <path d="
+    M525 450
+    L555 450"
+    stroke="#c89443"
+    stroke-width="2"/>
+
+  <path d="
+    M549 444
+    L556 450
+    L549 456"
+    fill="none"
+    stroke="#c89443"
+    stroke-width="2"/>
+
+
+  <!-- ========================= -->
+  <!-- STEP 3 -->
+  <!-- ========================= -->
+
+  <g filter="url(#shadow)">
+
+    <rect x="570"
+          y="355"
+          width="200"
+          height="190"
+          rx="12"
+          fill="url(#card)"
+          stroke="#60482a"
+          stroke-width="1"/>
+
+    <circle cx="610"
+            cy="395"
+            r="23"
+            fill="#17120d"
+            stroke="url(#gold)"
+            stroke-width="1.5"/>
+
+    <text x="610"
+          y="402"
+          text-anchor="middle"
+          fill="url(#gold)"
+          font-family="Arial, sans-serif"
+          font-size="18"
+          font-weight="bold">
+      03
+    </text>
+
+    <!-- Form icon -->
+    <rect x="610"
+          y="425"
+          width="65"
+          height="60"
+          rx="4"
+          fill="#17120d"
+          stroke="#d6a15b"
+          stroke-width="2"/>
+
+    <line x1="620"
+          y1="440"
+          x2="660"
+          y2="440"
+          stroke="#c89443"
+          stroke-width="2"/>
+
+    <line x1="620"
+          y1="452"
+          x2="660"
+          y2="452"
+          stroke="#8d7047"
+          stroke-width="2"/>
+
+    <line x1="620"
+          y1="464"
+          x2="650"
+          y2="464"
+          stroke="#8d7047"
+          stroke-width="2"/>
+
+    <path d="
+      M650 474
+      L655 479
+      L665 467"
+      fill="none"
+      stroke="#d6a15b"
+      stroke-width="2"/>
+
+    <text x="590"
+          y="515"
+          fill="#f5efe7"
+          font-family="Arial, sans-serif"
+          font-size="16"
+          font-weight="bold">
+      Submit Order
+    </text>
+
+    <text x="590"
+          y="535"
+          fill="#918a82"
+          font-family="Arial, sans-serif"
+          font-size="12">
+      Provide payment details
+    </text>
+
+  </g>
+
+
+  <!-- ========================= -->
+  <!-- ARROW -->
+  <!-- ========================= -->
+
+  <path d="
+    M780 450
+    L810 450"
+    stroke="#c89443"
+    stroke-width="2"/>
+
+  <path d="
+    M804 444
+    L811 450
+    L804 456"
+    fill="none"
+    stroke="#c89443"
+    stroke-width="2"/>
+
+
+  <!-- ========================= -->
+  <!-- STEP 4 -->
+  <!-- ========================= -->
+
+  <g filter="url(#shadow)">
+
+    <rect x="825"
+          y="355"
+          width="300"
+          height="190"
+          rx="12"
+          fill="url(#card)"
+          stroke="#60482a"
+          stroke-width="1"/>
+
+    <circle cx="865"
+            cy="395"
+            r="23"
+            fill="#17120d"
+            stroke="url(#gold)"
+            stroke-width="1.5"/>
+
+    <text x="865"
+          y="402"
+          text-anchor="middle"
+          fill="url(#gold)"
+          font-family="Arial, sans-serif"
+          font-size="18"
+          font-weight="bold">
+      04
+    </text>
+
+    <!-- Gmail / envelope -->
+    <rect x="865"
+          y="430"
+          width="80"
+          height="55"
+          rx="6"
+          fill="#17120d"
+          stroke="#d6a15b"
+          stroke-width="2"/>
+
+    <path d="
+      M867 434
+      L905 462
+      L943 434"
+      fill="none"
+      stroke="#d6a15b"
+      stroke-width="2"/>
+
+    <!-- Check mark -->
+    <circle cx="965"
+            cy="470"
+            r="18"
+            fill="#17120d"
+            stroke="#c89443"
+            stroke-width="2"/>
+
+    <path d="
+      M956 470
+      L963 477
+      L975 463"
+      fill="none"
+      stroke="#d6a15b"
+      stroke-width="2"/>
+
+    <text x="845"
+          y="515"
+          fill="#f5efe7"
+          font-family="Arial, sans-serif"
+          font-size="16"
+          font-weight="bold">
+      Verification &amp; Delivery
+    </text>
+
+    <text x="845"
+          y="535"
+          fill="#918a82"
+          font-family="Arial, sans-serif"
+          font-size="12">
+      Canvix Team verifies and emails
+    </text>
+
+  </g>
+
+
+  <!-- ========================= -->
+  <!-- FINAL MESSAGE -->
+  <!-- ========================= -->
+
+  <line x1="100"
+        y1="590"
+        x2="1100"
+        y2="590"
+        stroke="#6d502c"
         stroke-width="1"/>
 
-  <!-- Edition -->
-  <text x="300" y="742"
+  <text x="600"
+        y="625"
+        text-anchor="middle"
+        fill="#f1eadf"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="19">
+    Your PDF will be sent to your provided Gmail address.
+  </text>
+
+  <text x="600"
+        y="650"
         text-anchor="middle"
         fill="url(#gold)"
         font-family="Georgia, 'Times New Roman', serif"
         font-size="14"
-        letter-spacing="4">
-    DIGITAL EDITION • ৳50
+        letter-spacing="5">
+    CANVIX STORE • DIGITAL KNOWLEDGE
   </text>
+
 </svg>
