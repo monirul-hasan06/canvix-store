@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-22T12:39:58.815Z",
+  "books": [
+    {
+      "id": "alpha-male-001",
+      "slug": "how-to-be-an-alpha-male",
+      "title": {
+        "bn": "হাউ টু বি অ্যান আলফা মেল",
+        "en": "How to Be an Alpha Male"
+      },
+      "author": {
+        "bn": "ক্যানভিক্স প্রেস",
+        "en": "Canvix Press"
+      },
+      "coverImage": "/covers/how-to-be-an-alpha-male.svg",
+      "shortDescription": {
+        "bn": "আত্মবিশ্বাস, উপস্থিতি ও দৈনন্দিন নেতৃত্ব নিয়ে একটি সংক্ষিপ্ত ডিজিটাল গাইড।",
+        "en": "A concise digital guide to confidence, presence, and everyday leadership."
+      },
+      "longDescription": {
+        "bn": "হাউ টু বি অ্যান আলফা মেল একটি ব্যবহারিক আত্ম-দক্ষতা গাইড। বাক্য নয়, অভ্যাস—কাজের জায়গায়, সম্পর্কে ও দৈনন্দিন জীবনে শান্ত আত্মবিশ্বাস গড়ে তোলার জন্য সহজ অনুশীলন। প্রতিটি অধ্যায় একই দিনে প্রয়োগ করা যায়।",
+        "en": "How to Be an Alpha Male is a practical self-mastery handbook. It focuses on habits you can use at work, in relationships, and in daily life: presence, discipline, voice, and boundaries. Each chapter ends with a short practice you can complete the same day."
+      },
+      "receives": {
+        "bn": "পেমেন্ট যাচাইয়ের পর আপনার দেওয়া জিমেইলে মালিক নিজে পিডিএফ পাঠাবেন। ওয়েবসাইট থেকে ফাইল ডাউনলোড হয় না।",
+        "en": "After the owner verifies your payment, the PDF is sent manually to the Gmail you provide. There is no download from this website."
+      },
+      "priceBdt": 50,
+      "category": "self-development",
+      "tags": [
+        {
+          "bn": "আত্মউন্নয়ন",
+          "en": "self-improvement"
+        },
+        {
+          "bn": "আত্মবিশ্বাস",
+          "en": "confidence"
+        }
+      ],
+      "pages": 64,
+      "fileSize": "2.4 MB",
+      "language": {
+        "bn": "ইংরেজি",
+        "en": "English"
+      },
+      "format": "PDF",
+      "featured": true,
+      "newArrival": true
+    }
+  ],
+  "paymentNumbers": {
+    "bkash": "01318080805",
+    "rocket": "01318080805"
+  }
+}
