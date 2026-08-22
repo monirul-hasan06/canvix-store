@@ -30,6 +30,7 @@ Set these as server-side environment variables in the deployment dashboard. Do n
 - Import the repository.
 - The `netlify.toml` file supplies the build command, `dist` publish directory, function directory, API redirect, and SPA fallback.
 - Add the environment variables in Site configuration > Environment variables.
+- Secret scanning omits `ADMIN_EMAIL` and `OWNER_EMAIL` because those configured values may intentionally match the public contact address in the site source. Passwords and other credentials remain covered by secret scanning.
 - Deploy. `netlify/functions/api.ts` handles the `/api/*` routes.
 
 ## Persistent data requirement
