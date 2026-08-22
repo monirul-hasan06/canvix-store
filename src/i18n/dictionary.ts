@@ -14,9 +14,9 @@ export const dictionary = {
     langEn: "English",
     skip: "মূল কন্টেন্টে যান",
     heroKicker: "ডিজিটাল পিডিএফ বুকস্টোর",
-    heroTitle: "বই কিনুন। পেমেন্ট পাঠান। ইমেইলে পিডিএফ পান।",
+    heroTitle: "পছন্দের বই বেছে নিন। পেমেন্ট সম্পন্ন করুন। ইমেইলে পিডিএফ পেয়ে যান।",
     heroBody:
-      "ক্যানভিক্স স্টোর একটি ডিজিটাল মার্কেটপ্লেস। আপনি বই বেছে নিয়ে বিকাশ বা রকেটে টাকা পাঠান, ফর্ম পূরণ করেন—মালিক হাতে যাচাই করে আপনার জিমেইলে পিডিএফ পাঠান।",
+      "ক্যানভিক্স স্টোর একটি ডিজিটাল মার্কেটপ্লেস। আপনি বই বেছে নিয়ে বিকাশ বা রকেটে পেমেন্ট সম্পন্ন করুন, ফর্ম পূরণ করুন, Canvix Team যাচাই করে আপনার জিমেইলে পিডিএফ পাঠিয়ে দিবে।",
     browseBooks: "বই দেখুন",
     exploreCollection: "সংগ্রহ ঘুরে দেখুন",
     featured: "নির্বাচিত বই",
@@ -34,13 +34,13 @@ export const dictionary = {
     how3t: "তথ্য জমা দিন",
     how3b: "নাম, জিমেইল, ট্রানজেকশন আইডি ও প্রেরকের নম্বর ফর্মে লিখুন।",
     how4t: "আমরা পেমেন্ট যাচাই করি",
-    how4b: "মালিক নিজে লেনদেন মিলিয়ে দেখেন। স্বয়ংক্রিয় যাচাই নেই।",
+    how4b: "Canvix Team নিজে লেনদেন মিলিয়ে দেখেন। স্বয়ংক্রিয় যাচাই নেই।",
     how5t: "ইমেইলে পিডিএফ পান",
     how5b: "যাচাইয়ের পর আপনার দেওয়া জিমেইলে পিডিএফ ম্যানুয়ালি পাঠানো হয়।",
     faqTitle: "সচরাচর জিজ্ঞাসা",
     faq1q: "পিডিএফ কীভাবে পাব?",
     faq1a:
-      "ওয়েবসাইট থেকে ডাউনলোড হয় না। পেমেন্ট যাচাইয়ের পর মালিক আপনার জিমেইলে পিডিএফ পাঠাবেন।",
+      "ওয়েবসাইট থেকে ডাউনলোড হয় না। পেমেন্ট যাচাইয়ের পর Canvix Team আপনার জিমেইলে পিডিএফ পাঠাবেন।",
     faq2q: "কীভাবে টাকা পাঠাব?",
     faq2a:
       "চেকআউটে দেখানো বিকাশ বা রকেট পার্সোনাল নম্বরে বইয়ের সঠিক দাম পাঠান। ট্রানজেকশন আইডি রাখুন।",
@@ -48,7 +48,7 @@ export const dictionary = {
     faq3a: "না। পেমেন্ট ম্যানুয়ালি যাচাই হয়। পিডিএফও ম্যানুয়ালি ইমেইলে যায়।",
     faq4q: "কতক্ষণ লাগে?",
     faq4a:
-      "মালিক লেনদেন দেখে জবাব দেন। সাধারণত জিমেইল চেক করুন এবং স্প্যাম ফোল্ডারও দেখুন।",
+      "Canvix Team লেনদেন দেখে জবাব দেন। সাধারণত জিমেইল চেক করুন এবং স্প্যাম ফোল্ডারও দেখুন।",
     faq5q: "কোন ইমেইল ব্যবহার করব?",
     faq5a: "সঠিক জিমেইল দিন। পিডিএফ সেই ঠিকানায় পাঠানো হবে।",
     footerBlurb:
@@ -86,8 +86,8 @@ export const dictionary = {
     ins4: "যে মোবাইল নম্বর থেকে টাকা পাঠিয়েছেন সেটি মনে রাখুন।",
     ins5: "অর্ডার নিশ্চিতকরণ ফর্ম পূরণ করুন।",
     ins6: "ফর্ম জমা দিন।",
-    ins7: "দোকানের মালিক পেমেন্ট ম্যানুয়ালি যাচাই করবেন।",
-    ins8: "যাচাইয়ের পর মালিক আপনার জিমেইলে উত্তর দিয়ে পিডিএফ পাঠাবেন।",
+    ins7: "দোকানের Canvix Team পেমেন্ট ম্যানুয়ালি যাচাই করবেন।",
+    ins8: "যাচাইয়ের পর Canvix Team আপনার জিমেইলে উত্তর দিয়ে পিডিএফ পাঠাবেন।",
     manualNotice:
       "পেমেন্ট ম্যানুয়ালি যাচাই হয়। যাচাইয়ের পর পিডিএফ ইমেইলে ম্যানুয়ালি পাঠানো হবে।",
     formTitle: "অর্ডার নিশ্চিতকরণ",
@@ -110,20 +110,20 @@ export const dictionary = {
     invalidMobile: "সঠিক বাংলাদেশি মোবাইল নম্বর দিন (০১XXXXXXXXX)।",
     invalidTrx: "ট্রানজেকশন আইডি লিখুন।",
     amountMismatch: "পেমেন্ট পরিমাণ বইয়ের দামের সমান হতে হবে।",
-    submitError: "অর্ডার পাঠানো যায়নি। কিছুক্ষণ পর আবার চেষ্টা করুন।",
+    submitError: "অর্ডার পাঠানো যায়নি। কিছুক্ষণ পর আবার চেষ্টা করুন বা অর্ডার টি হোয়াটসঅ্যাপে পাঠান",
     successTitle: "অর্ডার সফলভাবে জমা হয়েছে!",
     successBody:
       "আপনার অর্ডারের তথ্য আমরা পেয়েছি। পেমেন্ট ম্যানুয়ালি যাচাই করা হবে। যাচাইয়ের পর কেনা পিডিএফ আপনার দেওয়া জিমেইলে পাঠানো হবে।",
     orderId: "অর্ডার আইডি",
     contactIntro:
-      "অর্ডার বা ক্যাটাগরি নিয়ে প্রশ্ন থাকলে লিখুন। পিডিএফ এই ফর্ম দিয়ে যায় না—কেবল কেনাকাটার ফর্মের মাধ্যমে অর্ডার হয়।",
+      "অর্ডার বা ক্যাটাগরি নিয়ে প্রশ্ন থাকলে লিখুন। পিডিএফ/অর্ডার এই ফর্ম দিয়ে যায় না, কেবল কেনাকাটার ফর্মের মাধ্যমে অর্ডার হয়।",
     yourMessage: "বার্তা",
     sendMessage: "বার্তা পাঠান",
     messageSent: "বার্তা গৃহীত হয়েছে।",
     notFound: "পাতা পাওয়া যায়নি",
     goHome: "হোমে যান",
     seoHome:
-      "ক্যানভিক্স স্টোর — ডিজিটাল পিডিএফ বই। বিকাশ/রকেটে পেমেন্ট, যাচাইয়ের পর জিমেইলে পিডিএফ।",
+      "ক্যানভিক্স স্টোর - ডিজিটাল পিডিএফ বই। বিকাশ/রকেটে পেমেন্ট, যাচাইয়ের পর জিমেইলে পিডিএফ।",
     seoBooks: "ক্যানভিক্স স্টোরের সব ডিজিটাল বই দেখুন।",
     seoFaq: "পেমেন্ট, ডেলিভারি ও যাচাই নিয়ে প্রশ্নোত্তর।",
     seoContact: "ক্যানভিক্স স্টোরের সাথে যোগাযোগ করুন।",
@@ -146,7 +146,7 @@ export const dictionary = {
     heroKicker: "Digital PDF bookstore",
     heroTitle: "Choose a book. Send payment. Receive the PDF by email.",
     heroBody:
-      "Canvix Store is a digital marketplace. You pick a title, send bKash or Rocket, submit the order form, and the owner verifies payment by hand, then emails the PDF to your Gmail.",
+      "Canvix Store is a digital marketplace. You pick a title, send payment in bKash or Rocket, submit the order form, and the Canvix Team verifies payment, then emails the PDF to your Gmail.",
     browseBooks: "Browse Books",
     exploreCollection: "Explore Collection",
     featured: "Featured Books",
@@ -164,9 +164,9 @@ export const dictionary = {
     how3t: "Submit Your Information",
     how3b: "Enter your name, Gmail, transaction ID, and the mobile number you paid from.",
     how4t: "We Verify Your Payment",
-    how4b: "The store owner checks the transaction manually. There is no automatic verification.",
+    how4b: "The Canvix Team checks the transaction manually. There is no automatic verification.",
     how5t: "Receive Your PDF by Email",
-    how5b: "After verification, the owner replies to your Gmail and sends the PDF. There is no download link here.",
+    how5b: "After verification, the Canvix Team replies to your Gmail and sends the PDF. There is no download link here.",
     faqTitle: "FAQ",
     faq1q: "How do I get the PDF?",
     faq1a:
@@ -177,7 +177,7 @@ export const dictionary = {
     faq3q: "Is payment verified automatically?",
     faq3a: "No. Payment is verified by hand. The PDF is also sent by hand over email.",
     faq4q: "How long does it take?",
-    faq4a: "The owner reviews the transaction and replies by Gmail. Check inbox and spam.",
+    faq4a: "The Canvix Team reviews the transaction and replies by Gmail. Check inbox and spam.",
     faq5q: "Which email should I use?",
     faq5a: "Use a working Gmail address. That is where the PDF will be sent.",
     footerBlurb:
@@ -216,7 +216,7 @@ export const dictionary = {
     ins5: "Complete the order confirmation form.",
     ins6: "Submit the form.",
     ins7: "The store owner will manually verify your payment.",
-    ins8: "After verification, the store owner will reply to your Gmail and send the purchased PDF.",
+    ins8: "After verification, the Canvix Team will reply to your Gmail and send the purchased PDF.",
     manualNotice:
       "Payment is manually verified. Your PDF will be sent manually by email after verification.",
     formTitle: "Order confirmation",
