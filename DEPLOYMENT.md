@@ -6,11 +6,11 @@ The frontend and API are configured for Vercel and Netlify. Both platforms use t
 
 Set these as server-side environment variables in the deployment dashboard. Do not expose them as `VITE_*` variables.
 
-- `OWNER_EMAIL`
+- `ORDER_RECIPIENT`
 - `ADMIN_EMAIL`
 - `ADMIN_PASSWORD`
 - `SESSION_SECRET`
-- `SMTP_HOST`
+- `MAIL_HOST`
 - `SMTP_PORT`
 - `SMTP_USER`
 - `SMTP_PASS`

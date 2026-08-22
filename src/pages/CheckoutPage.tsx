@@ -113,6 +113,24 @@ export function CheckoutPage() {
     }
   }
 
+  function sendToWhatsApp() {
+    setFormError("");
+    if (!validate() || !book) return;
+    const paymentName = paymentMethods.find((payment) => payment.id === method)?.name || method;
+    const text = [
+      "Canvix Store Order",
+      `Book: ${book.title.en}`,
+      `Name: ${name.trim()}`,
+      `Gmail: ${email.trim()}`,
+      `Payment method: ${paymentName}`,
+      `Sender mobile: ${sender.trim()}`,
+      `Transaction ID: ${trx.trim()}`,
+      `Amount: BDT ${Number(amount)}`,
+      `Message: ${message.trim() || "None"}`,
+    ].join("\n");
+    window.open(`https://wa.me/8801410296217?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+  }
+
   return (
     <>
       <Seo title={t("paymentTitle")} description={t("seoCheckout")} />
@@ -251,9 +269,14 @@ export function CheckoutPage() {
 
               {formError ? <p className="text-sm text-red-800">{formError}</p> : null}
 
-              <Button type="submit" className="w-full sm:w-auto" disabled={submitting}>
-                {submitting ? t("submitting") : t("submitOrder")}
-              </Button>
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Button type="submit" className="w-full sm:w-auto" disabled={submitting}>
+                  {submitting ? t("submitting") : t("submitOrder")}
+                </Button>
+                <Button type="button" variant="secondary" className="w-full border-green-600 text-green-700 hover:bg-green-50 sm:w-auto" onClick={sendToWhatsApp} disabled={submitting}>
+                  {t("sendWhatsApp")}
+                </Button>
+              </div>
             </form>
           </div>
         </div>

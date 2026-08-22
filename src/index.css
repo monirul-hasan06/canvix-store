@@ -51,8 +51,30 @@ html[data-theme="dark"] .bg-white {
   background-color: #292524;
 }
 
+html[data-theme="dark"] .bg-white\/95 {
+  background-color: rgb(41 37 36 / 95%);
+}
+
 html[data-theme="dark"] .bg-\[\#f7f3ec\]\/90 {
   background-color: rgb(28 25 23 / 90%);
+}
+
+html[data-theme="dark"] .bg-\[\#efe8dc\]\/50,
+html[data-theme="dark"] .bg-\[\#efe8dc\]\/40 {
+  background-color: rgb(41 37 36 / 70%);
+}
+
+html[data-theme="dark"] .bg-stone-50,
+html[data-theme="dark"] .bg-stone-100 {
+  background-color: #3c3835;
+}
+
+html[data-theme="dark"] .bg-amber-50 {
+  background-color: #332b1f;
+}
+
+html[data-theme="dark"] .bg-emerald-50 {
+  background-color: #16332d;
 }
 
 html[data-theme="dark"] .text-stone-900,
@@ -66,9 +88,41 @@ html[data-theme="dark"] .text-stone-500 {
   color: #d6d3d1;
 }
 
+html[data-theme="dark"] .text-amber-950 {
+  color: #fde68a;
+}
+
+html[data-theme="dark"] .text-emerald-800 {
+  color: #86efac;
+}
+
 html[data-theme="dark"] .border-stone-200,
 html[data-theme="dark"] .border-stone-300 {
   border-color: #57534e;
+}
+
+html[data-theme="dark"] .border-amber-200,
+html[data-theme="dark"] .border-emerald-200 {
+  border-color: #78602b;
+}
+
+html[data-theme="dark"] input:not([type="checkbox"]),
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+  border-color: #57534e;
+  background-color: #1c1917;
+  color: #f5f5f4;
+}
+
+html[data-theme="dark"] option {
+  background-color: #292524;
+  color: #f5f5f4;
+}
+
+html[data-theme="dark"] .hover\:bg-stone-50:hover,
+html[data-theme="dark"] .hover\:bg-stone-100:hover,
+html[data-theme="dark"] .hover\:bg-stone-200\/60:hover {
+  background-color: #3c3835;
 }
 
 html[data-theme="dark"] .admin-shell .bg-white,

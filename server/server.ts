@@ -9,7 +9,7 @@ import { resolve } from "node:path";
 
 export const app = express();
 const port = Number(process.env.PORT || 3001);
-const ownerEmail = process.env.OWNER_EMAIL || "dev.get.in.touch@gmail.com";
+const orderRecipient = process.env.ORDER_RECIPIENT;
 const adminEmail = (process.env.ADMIN_EMAIL || ownerEmail).toLowerCase();
 const adminPassword = process.env.ADMIN_PASSWORD;
 const sessionSecret = process.env.SESSION_SECRET;
@@ -19,7 +19,7 @@ app.get("/api/content", async (_req, res) => {
   res.json(await loadContent());
 });
 
-const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standardHeaders: "draft-8", legacyHeaders: false });
+const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standardHeaders: false, legacyHeaders: false });
 function parseCookies(value: string | undefined): Record<string, string> {
   return Object.fromEntries((value || "").split(";").map((part) => part.trim().split("=")).filter(([key, token]) => key && token));
 }
@@ -110,7 +110,7 @@ app.post("/api/admin/covers", async (req, res) => {
 
 app.use(
   "/api/orders",
-  rateLimit({ windowMs: 15 * 60 * 1000, limit: 5, standardHeaders: "draft-8", legacyHeaders: false }),
+  rateLimit({ windowMs: 15 * 60 * 1000, limit: 5, standardHeaders: false, legacyHeaders: false }),
 );
 
 function clean(value: unknown, maxLength: number): string {
@@ -144,16 +144,16 @@ app.post("/api/orders", async (req, res) => {
     return res.status(400).json({ error: "Please check your payment information." });
   }
 
-  const smtpHost = process.env.SMTP_HOST;
+  const mailHost = process.env.MAIL_HOST;
   const smtpPort = Number(process.env.SMTP_PORT || 587);
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS?.replace(/\s/g, "");
-  if (!smtpHost || !smtpUser || !smtpPass) {
+  if (!mailHost || !smtpUser || !smtpPass || !orderRecipient) {
     return res.status(503).json({ error: "Order service is not configured yet." });
   }
 
   const transporter = nodemailer.createTransport({
-    host: smtpHost,
+    host: mailHost,
     port: smtpPort,
     secure: smtpPort === 465,
     connectionTimeout: 10000,
@@ -168,7 +168,7 @@ app.post("/api/orders", async (req, res) => {
     const submittedAt = new Date().toISOString();
     await transporter.sendMail({
       from: smtpUser,
-      to: ownerEmail,
+      to: orderRecipient,
       replyTo: gmail,
       subject: `New Canvix Store Order — ${book.title.en} — ${transactionId}`,
       text: [

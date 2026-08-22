@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { OWNER_EMAIL, STORE_NAME } from "../../data/site";
+import { STORE_NAME } from "../../data/site";
 import { useLanguage } from "../../i18n/LanguageContext";
 
 export function Footer() {
@@ -55,12 +55,9 @@ export function Footer() {
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
             {t("navContact")}
           </p>
-          <a
-            className="mt-3 inline-block text-sm text-amber-200/90 hover:text-white"
-            href={`mailto:${OWNER_EMAIL}`}
-          >
-            {OWNER_EMAIL}
-          </a>
+          <Link className="mt-3 inline-block text-sm text-amber-200/90 hover:text-white" to="/contact">
+            {t("navContact")}
+          </Link>
         </div>
       </div>
       <div className="border-t border-stone-800 px-4 py-4 text-center text-xs text-stone-500">

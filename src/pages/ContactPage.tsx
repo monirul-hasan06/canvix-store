@@ -2,7 +2,6 @@ import { useState, type FormEvent } from "react";
 import { Seo } from "../components/Seo";
 import { Button } from "../components/ui/Button";
 import { Field, TextArea, TextInput } from "../components/ui/Field";
-import { OWNER_EMAIL } from "../data/site";
 import { useLanguage } from "../i18n/LanguageContext";
 
 export function ContactPage() {
@@ -21,9 +20,6 @@ export function ContactPage() {
         <div>
           <h1 className="font-serif text-4xl">{t("navContact")}</h1>
           <p className="mt-3 max-w-md text-stone-600">{t("contactIntro")}</p>
-          <a className="mt-6 inline-block text-amber-800" href={`mailto:${OWNER_EMAIL}`}>
-            {OWNER_EMAIL}
-          </a>
         </div>
         {sent ? (
           <div className="rounded-2xl border border-stone-200 bg-white p-8">
