@@ -88,9 +88,15 @@ export function CheckoutPage() {
           formStartedAt: startedAt,
         }),
       });
-      const data = (await res.json()) as { orderId?: string; error?: string };
-      if (!res.ok || !data.orderId) {
-        setFormError(data.error || t("submitError"));
+      const data = (await res.json().catch(() => null)) as { orderId?: string; error?: string; whatsappUrl?: string } | null;
+      if (data?.whatsappUrl) {
+        window.open(data.whatsappUrl, "_blank", "noopener,noreferrer");
+        setFormError("Email delivery failed. WhatsApp was opened with your order details; tap Send to submit it.");
+        setSubmitting(false);
+        return;
+      }
+      if (!res.ok || !data?.orderId) {
+        setFormError(data?.error || t("submitError"));
         setSubmitting(false);
         return;
       }

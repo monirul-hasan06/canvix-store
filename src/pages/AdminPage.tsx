@@ -18,7 +18,9 @@ type NewBook = Record<string, string>;
 
 async function request(path: string, options?: RequestInit) {
   const response = await fetch(path, { ...options, credentials: "include", headers: { "Content-Type": "application/json", ...options?.headers } });
-  const data = response.status === 204 ? null : await response.json();
+  const data = response.status === 204 ? null : await response.json().catch(() => {
+    throw new Error("Admin server returned an invalid response. Make sure the API server is running.");
+  });
   if (!response.ok) throw new Error(data?.error || "Request failed.");
   return data;
 }

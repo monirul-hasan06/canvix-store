@@ -111,12 +111,6 @@ function clean(value: unknown, maxLength: number): string {
   return typeof value === "string" ? value.replace(/[\u0000-\u001f\u007f]/g, "").trim().slice(0, maxLength) : "";
 }
 
-function nextOrderId(): string {
-  orderSequence += 1;
-  const date = new Date().getFullYear();
-  return `CANVIX-${date}-${String(orderSequence).padStart(6, "0")}`;
-}
-
 app.post("/api/orders", async (req, res) => {
   const content = await loadContent();
   const body = req.body as Record<string, unknown>;
@@ -143,50 +137,65 @@ app.post("/api/orders", async (req, res) => {
     return res.status(400).json({ error: "Please check your payment information." });
   }
 
+  const orderId = `CANVIX-${new Date().getFullYear()}-${randomBytes(4).toString("hex").toUpperCase()}`;
+  const submittedAt = new Date().toISOString();
+  const orderText = [
+    "Canvix Store — New Order",
+    `Order ID: ${orderId}`,
+    `Customer Name: ${fullName}`,
+    `Customer Gmail: ${gmail}`,
+    `Selected Book: ${book.title.en}`,
+    `Book Price: BDT ${book.priceBdt}`,
+    `Payment Method: ${paymentMethod}`,
+    `Sender Mobile Number: ${senderMobile}`,
+    `Transaction ID: ${transactionId}`,
+    `Payment Amount: BDT ${paymentAmount}`,
+    `Customer Message: ${customerMessage || "None"}`,
+    `Order Submission Date/Time: ${submittedAt}`,
+  ].join("\n");
+
+  let emailSent = false;
   const smtpHost = process.env.SMTP_HOST;
   const smtpPort = Number(process.env.SMTP_PORT || 587);
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS?.replace(/\s/g, "");
-  if (!smtpHost || !smtpUser || !smtpPass) {
-    return res.status(503).json({ error: "Order service is not configured yet." });
+  if (smtpHost && smtpUser && smtpPass) {
+    try {
+      const transporter = nodemailer.createTransport({
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpPort === 465,
+        auth: { user: smtpUser, pass: smtpPass },
+      });
+      await transporter.verify();
+      await transporter.sendMail({
+        from: smtpUser,
+        to: ownerEmail,
+        replyTo: gmail,
+        subject: `New Canvix Store Order — ${book.title.en} — ${transactionId}`,
+        text: orderText,
+      });
+      emailSent = true;
+    } catch (error) {
+      console.error("Order email failed; trying WhatsApp fallback", error);
+    }
   }
 
-  const transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
-    secure: smtpPort === 465,
-    auth: { user: smtpUser, pass: smtpPass },
-  });
-
-  try {
-    await transporter.verify();
-    const orderId = `CANVIX-${new Date().getFullYear()}-${randomBytes(4).toString("hex").toUpperCase()}`;
-    const submittedAt = new Date().toISOString();
-    await transporter.sendMail({
-      from: smtpUser,
-      to: ownerEmail,
-      replyTo: gmail,
-      subject: `New Canvix Store Order — ${book.title.en} — ${transactionId}`,
-      text: [
-        "Canvix Store — New Order",
-        `Order ID: ${orderId}`,
-        `Customer Name: ${fullName}`,
-        `Customer Gmail: ${gmail}`,
-        `Selected Book: ${book.title.en}`,
-        `Book Price: BDT ${book.priceBdt}`,
-        `Payment Method: ${paymentMethod}`,
-        `Sender Mobile Number: ${senderMobile}`,
-        `Transaction ID: ${transactionId}`,
-        `Payment Amount: BDT ${paymentAmount}`,
-        `Customer Message: ${customerMessage || "None"}`,
-        `Order Submission Date/Time: ${submittedAt}`,
-      ].join("\n"),
+  if (!emailSent) {
+    const whatsappRecipient = "8801521796217";
+    return res.status(202).json({
+      orderId,
+      deliveryMethod: "whatsapp",
+      whatsappUrl: `https://wa.me/${whatsappRecipient}?text=${encodeURIComponent(orderText)}`,
+      message: "Email delivery failed. WhatsApp has been prepared as a backup.",
     });
-    return res.status(201).json({ orderId });
-  } catch (error) {
-    console.error("Order email failed", error);
-    return res.status(502).json({ error: "Could not send the order. Please try again later." });
   }
+  return res.status(201).json({ orderId, deliveryMethod: "email" });
+});
+
+app.use("/api", (error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+  console.error("API request failed", error);
+  if (!res.headersSent) res.status(500).json({ error: "The server could not complete this request." });
 });
 
 app.listen(port, () => {
