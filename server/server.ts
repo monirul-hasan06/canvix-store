@@ -58,7 +58,7 @@ app.post("/api/admin/login", authLimiter, (req, res) => {
   return res.json({ authenticated: true });
 });
 
-app.post("/api/admin/logout", (req, res) => {
+app.post("/api/admin/logout", (_req, res) => {
   res.setHeader("Set-Cookie", "canvix_admin=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0");
   return res.status(204).send();
 });

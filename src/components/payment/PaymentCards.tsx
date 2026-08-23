@@ -9,8 +9,12 @@ export function PaymentCards() {
   const [copied, setCopied] = useState<string | null>(null);
 
   async function onCopy(id: string, number: string) {
-    await copyText(number);
-    setCopied(id);
+    try {
+      await copyText(number);
+      setCopied(id);
+    } catch {
+      setCopied(null);
+    }
     window.setTimeout(() => setCopied(null), 2000);
   }
 
@@ -19,7 +23,7 @@ export function PaymentCards() {
       {paymentMethods.filter((method) => method.enabled).map((method) => (
         <li
           key={method.id}
-          className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm"
+          className="interactive-lift rounded-2xl border border-stone-200 bg-white p-5 shadow-sm"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-800">
             {method.name}

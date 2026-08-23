@@ -13,7 +13,7 @@ export function BookCard({ book }: { book: Book }) {
   const discount = discountPercent(book);
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+    <article className="interactive-lift group flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
       <Link to={`/books/${book.slug}`} className="relative block overflow-hidden bg-stone-100">
         <img
           src={book.coverImage}

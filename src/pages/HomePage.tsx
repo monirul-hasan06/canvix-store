@@ -27,8 +27,8 @@ export function HomePage() {
     <>
       <Seo title={STORE_NAME} description={t("seoHome")} />
 
-      <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-20">
-        <div>
+      <section className="page-rise mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-20">
+        <div className="max-w-2xl">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-800">
             {t("heroKicker")}
           </p>
@@ -48,7 +48,7 @@ export function HomePage() {
         <div className="relative mx-auto w-full max-w-sm">
           <div className="absolute -inset-4 rounded-[2rem] bg-amber-800/10" aria-hidden />
           <img
-            src="/covers/how-to-be-an-alpha-male.svg"
+            src={visibleBooks[0]?.coverImage || "/covers/how-to-be-an-alpha-male.svg"}
             alt={visibleBooks[0] ? loc(visibleBooks[0].title) : STORE_NAME}
             className="relative w-full rounded-3xl border border-stone-200 shadow-lg"
           />
@@ -78,7 +78,7 @@ export function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <h2 className="font-serif text-3xl">{t("categories")}</h2>
           <p className="mt-2 max-w-2xl text-stone-600">{t("categoriesIntro")}</p>
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="stagger-in mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {categories.filter((cat) => cat.visible !== false).map((cat) => {
               const count = getBooksByCategory(cat.id, visibleBooks).length;
               return (
