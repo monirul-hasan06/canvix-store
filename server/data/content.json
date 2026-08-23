@@ -1,6 +1,6 @@
 {
-  "version": 12,
-  "updatedAt": "2026-08-23T07:20:38.398Z",
+  "version": 13,
+  "updatedAt": "2026-08-23T09:25:29.403Z",
   "books": [
     {
       "id": "alpha-male-001",
@@ -140,7 +140,9 @@
     }
   ],
   "showCategories": true,
-  "showOrderSubmit": true,
+  "showOrderSubmit": false,
+  "showWhatsAppSubmit": true,
+  "showGmailSubmit": true,
   "siteCopy": {
     "navHome": {
       "bn": "হোম",
@@ -525,6 +527,10 @@
     "sendWhatsApp": {
       "bn": "হোয়াটসঅ্যাপে পাঠান",
       "en": "Send via WhatsApp"
+    },
+    "sendGmail": {
+      "bn": "জিমেইলে পাঠান",
+      "en": "Send via Gmail"
     },
     "submitting": {
       "bn": "জমা হচ্ছে…",
