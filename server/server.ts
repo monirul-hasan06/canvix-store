@@ -118,6 +118,48 @@ function clean(value: unknown, maxLength: number): string {
   return typeof value === "string" ? value.replace(/[\u0000-\u001f\u007f]/g, "").trim().slice(0, maxLength) : "";
 }
 
+app.post("/api/contact", async (req, res) => {
+  const name = clean(req.body?.name, 100);
+  const email = clean(req.body?.email, 254).toLowerCase();
+  const message = clean(req.body?.message, 2000);
+  if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !message) {
+    return res.status(400).json({ error: "Please provide your name, email, and message." });
+  }
+
+  const mailHost = process.env.MAIL_HOST;
+  const smtpPort = Number(process.env.SMTP_PORT || 587);
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS?.replace(/\s/g, "");
+  if (!mailHost || !smtpUser || !smtpPass || !orderRecipient) {
+    return res.status(503).json({ error: "Contact service is not configured yet." });
+  }
+
+  const transporter = nodemailer.createTransport({
+    host: mailHost,
+    port: smtpPort,
+    secure: smtpPort === 465,
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
+    auth: { user: smtpUser, pass: smtpPass },
+  });
+
+  try {
+    await transporter.verify();
+    await transporter.sendMail({
+      from: smtpUser,
+      to: orderRecipient,
+      replyTo: email,
+      subject: `Canvix Store contact message from ${name}`,
+      text: [`Name: ${name}`, `Email: ${email}`, "", message].join("\n"),
+    });
+    return res.status(201).json({ sent: true });
+  } catch (error) {
+    console.error("Contact email failed", error);
+    return res.status(502).json({ error: "Could not send your message. Please try again later." });
+  }
+});
+
 app.post("/api/orders", async (req, res) => {
   const content = await loadContent();
   const body = req.body as Record<string, unknown>;

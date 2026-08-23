@@ -7,10 +7,32 @@ import { useLanguage } from "../i18n/LanguageContext";
 export function ContactPage() {
   const { t } = useLanguage();
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
+    setSending(true);
+    setError("");
+    const form = new FormData(e.currentTarget);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.get("name"),
+          email: form.get("email"),
+          message: form.get("message"),
+        }),
+      });
+      const data = await response.json().catch(() => ({})) as { error?: string };
+      if (!response.ok) throw new Error(data.error || "Could not send your message.");
+      setSent(true);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "Could not send your message.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -36,7 +58,8 @@ export function ContactPage() {
             <Field label={t("yourMessage")} htmlFor="message">
               <TextArea id="message" name="message" required />
             </Field>
-            <Button type="submit">{t("sendMessage")}</Button>
+            {error ? <p className="text-sm text-red-800" role="alert">{error}</p> : null}
+            <Button type="submit" disabled={sending}>{sending ? "Sending..." : t("sendMessage")}</Button>
           </form>
         )}
       </div>
