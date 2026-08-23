@@ -171,7 +171,7 @@ app.post("/api/orders", async (req, res) => {
   const transactionId = clean(body.transactionId, 100);
   const customerMessage = clean(body.customerMessage, 1000);
   const paymentAmount = Number(body.paymentAmount);
-  const book = content.books.find((entry) => entry.slug === bookSlug);
+  const book = content.books.find((entry) => entry.slug === bookSlug && entry.visible !== false);
 
   if (clean(body.company, 100) || Number(body.formStartedAt) > 0 && Date.now() - Number(body.formStartedAt) < 2000) {
     return res.status(400).json({ error: "Invalid submission." });
