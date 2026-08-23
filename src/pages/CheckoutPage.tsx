@@ -288,17 +288,21 @@ export function CheckoutPage() {
 
               {formError ? <p className="text-sm text-red-800">{formError}</p> : null}
 
-              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                {showOrderSubmit ? <Button type="submit" className="w-full sm:w-auto" disabled={submitting}>
-                  {submitting ? t("submitting") : t("submitOrder")}
+              <div className="grid gap-3 sm:grid-cols-3">
+                {showOrderSubmit ? <Button type="submit" className="min-h-12 w-full rounded-xl bg-amber-800 px-4 text-left shadow-sm hover:bg-amber-900 sm:justify-start" disabled={submitting}>
+                  <span aria-hidden className="text-lg">✓</span>
+                  <span>{submitting ? t("submitting") : t("submitOrder")}</span>
                 </Button> : null}
-                {showGmailSubmit ? <Button type="button" variant="secondary" className="w-full border-red-600 text-red-700 hover:bg-red-50 sm:w-auto" onClick={sendToGmail} disabled={submitting || !orderEmail}>
-                  {t("sendGmail")}
+                {showGmailSubmit ? <Button type="button" variant="secondary" title={!orderEmail ? "Gmail submission is not configured." : undefined} className="min-h-12 w-full rounded-xl border-red-200 bg-red-50 px-4 text-left text-red-800 hover:border-red-300 hover:bg-red-100 sm:justify-start" onClick={sendToGmail} disabled={submitting || !orderEmail}>
+                  <span aria-hidden className="text-lg">@</span>
+                  <span>{t("sendGmail")}</span>
                 </Button> : null}
-                {showWhatsAppSubmit ? <Button type="button" variant="secondary" className="w-full border-green-600 text-green-700 hover:bg-green-50 sm:w-auto" onClick={sendToWhatsApp} disabled={submitting}>
+                {showWhatsAppSubmit ? <Button type="button" variant="secondary" className="min-h-12 w-full rounded-xl border-green-200 bg-green-50 px-4 text-left text-green-800 hover:border-green-300 hover:bg-green-100 sm:justify-start" onClick={sendToWhatsApp} disabled={submitting}>
+                  <span aria-hidden className="text-lg">↗</span>
                   {t("sendWhatsApp")}
                 </Button> : null}
               </div>
+              {showGmailSubmit && !orderEmail ? <p className="text-xs text-stone-500">Gmail submission is currently unavailable because the store email is not configured.</p> : null}
             </form>
           </div>
         </div>
