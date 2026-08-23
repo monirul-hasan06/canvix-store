@@ -1,6 +1,6 @@
 {
-  "version": 10,
-  "updatedAt": "2026-08-23T00:01:13.215Z",
+  "version": 11,
+  "updatedAt": "2026-08-23T06:51:37.254Z",
   "books": [
     {
       "id": "alpha-male-001",
@@ -140,6 +140,7 @@
     }
   ],
   "showCategories": true,
+  "showOrderSubmit": false,
   "siteCopy": {
     "navHome": {
       "bn": "হোম",

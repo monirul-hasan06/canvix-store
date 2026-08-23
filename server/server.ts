@@ -67,8 +67,8 @@ app.get("/api/admin/session", (req, res) => res.json({ authenticated: isAdmin(re
 
 app.put("/api/admin/content", async (req, res) => {
   if (!isAdmin(req)) return res.status(401).json({ error: "Authentication required." });
-  const incoming = req.body as { version?: unknown; books?: unknown; categories?: unknown; paymentMethods?: unknown; showCategories?: unknown; siteCopy?: unknown };
-  if (!Number.isInteger(incoming.version) || !Array.isArray(incoming.books) || !Array.isArray(incoming.categories) || !Array.isArray(incoming.paymentMethods) || !incoming.siteCopy || typeof incoming.siteCopy !== "object" || typeof incoming.showCategories !== "boolean") {
+  const incoming = req.body as { version?: unknown; books?: unknown; categories?: unknown; paymentMethods?: unknown; showCategories?: unknown; showOrderSubmit?: unknown; siteCopy?: unknown };
+  if (!Number.isInteger(incoming.version) || !Array.isArray(incoming.books) || !Array.isArray(incoming.categories) || !Array.isArray(incoming.paymentMethods) || !incoming.siteCopy || typeof incoming.siteCopy !== "object" || typeof incoming.showCategories !== "boolean" || typeof incoming.showOrderSubmit !== "boolean") {
     return res.status(400).json({ error: "Invalid content payload." });
   }
   const current = await loadContent();
@@ -89,6 +89,7 @@ app.put("/api/admin/content", async (req, res) => {
     categories: categories.map((category) => ({ id: category.id.trim().slice(0, 100), name: { bn: category.name.bn.trim().slice(0, 200), en: category.name.en.trim().slice(0, 200) }, visible: category.visible !== false })),
     paymentMethods: paymentMethods.map((method) => ({ id: String(method.id).trim().toLowerCase(), name: String(method.name).trim().slice(0, 80), number: String(method.number), enabled: method.enabled === true })),
     showCategories: incoming.showCategories,
+    showOrderSubmit: incoming.showOrderSubmit,
     siteCopy: Object.fromEntries(Object.entries(incoming.siteCopy as Record<string, unknown>).filter(([key, value]) => /^[a-zA-Z0-9]+$/.test(key) && value && typeof value === "object").map(([key, value]) => { const copy = value as { bn?: unknown; en?: unknown }; return [key, { bn: String(copy.bn || "").slice(0, 4000), en: String(copy.en || "").slice(0, 4000) }]; })),
   };
   await saveContent(next);

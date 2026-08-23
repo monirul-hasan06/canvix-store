@@ -15,6 +15,7 @@ type Content = {
   categories: { id: string; name: { bn: string; en: string }; visible?: boolean }[];
   paymentMethods: PaymentOption[];
   showCategories: boolean;
+  showOrderSubmit: boolean;
   siteCopy: SiteCopy;
 };
 
@@ -42,6 +43,7 @@ export function AdminPage() {
   const [uploadingCover, setUploadingCover] = useState(false);
   const [categoriesJson, setCategoriesJson] = useState("");
   const [showCategories, setShowCategories] = useState(true);
+  const [showOrderSubmit, setShowOrderSubmit] = useState(true);
   const [newBook, setNewBook] = useState<NewBook>({ titleBn: "", titleEn: "", authorBn: "", authorEn: "", shortBn: "", shortEn: "", longBn: "", longEn: "", receivesBn: "", receivesEn: "", coverImage: "/covers/", price: "", originalPrice: "", category: "other", tagsBn: "", tagsEn: "", pages: "", fileSize: "", languageBn: "ইংরেজি", languageEn: "English" });
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -93,6 +95,7 @@ export function AdminPage() {
     setPaymentMethods(data.paymentMethods?.length ? data.paymentMethods : DEFAULT_PAYMENT_METHODS);
     setCategoriesJson(JSON.stringify(data.categories, null, 2));
     setShowCategories(data.showCategories);
+    setShowOrderSubmit(data.showOrderSubmit !== false);
     setSiteCopy({ ...defaultSiteCopy, ...(data.siteCopy || {}) });
     setDraftDirty(false);
   }
@@ -323,7 +326,7 @@ export function AdminPage() {
       const categories = JSON.parse(categoriesJson) as Content["categories"];
       const saved = (await request("/api/admin/content", {
         method: "PUT",
-        body: JSON.stringify({ version: content.version, books, categories, paymentMethods, showCategories, siteCopy }),
+        body: JSON.stringify({ version: content.version, books, categories, paymentMethods, showCategories, showOrderSubmit, siteCopy }),
       })) as Content;
       applyContent(saved);
       await refreshContent();
@@ -525,6 +528,7 @@ export function AdminPage() {
             <div className="space-y-3">{paymentMethods.map((method) => <div key={method.id} className="grid gap-2 rounded-xl border border-stone-200 p-3 sm:grid-cols-[0.8fr_1fr_1fr_auto_auto] sm:items-end"><Field label="ID" htmlFor={`payment-id-${method.id}`}><TextInput id={`payment-id-${method.id}`} value={method.id} readOnly /></Field><Field label="Name" htmlFor={`payment-name-${method.id}`}><TextInput id={`payment-name-${method.id}`} value={method.name} onChange={(event) => updatePaymentMethod(method.id, { name: event.target.value })} /></Field><Field label="Account number" htmlFor={`payment-number-${method.id}`}><TextInput id={`payment-number-${method.id}`} inputMode="numeric" value={method.number} onChange={(event) => updatePaymentMethod(method.id, { number: event.target.value })} /></Field><label className="flex items-center gap-2 pb-2 text-sm"><input type="checkbox" checked={method.enabled} onChange={(event) => updatePaymentMethod(method.id, { enabled: event.target.checked })} /> Enabled</label><Button type="button" variant="secondary" onClick={() => removePaymentMethod(method.id)}>Remove</Button></div>)}</div>
             <div className="grid gap-2 border-t border-stone-100 pt-4 sm:grid-cols-3"><TextInput aria-label="New payment ID" placeholder="nagad" value={newPaymentId} onChange={(event) => setNewPaymentId(event.target.value)} /><TextInput aria-label="New payment name" placeholder="Nagad" value={newPaymentName} onChange={(event) => setNewPaymentName(event.target.value)} /><TextInput aria-label="New payment account number" placeholder="01XXXXXXXXX" inputMode="numeric" value={newPaymentNumber} onChange={(event) => setNewPaymentNumber(event.target.value)} /><Button type="button" variant="secondary" onClick={addPaymentMethod}>Add payment method</Button></div>
             <label className="flex items-center gap-3 text-sm text-stone-700"><input type="checkbox" checked={showCategories} onChange={(event) => { setShowCategories(event.target.checked); setDraftDirty(true); }} /> Show category list on homepage</label>
+            <label className="flex items-center gap-3 text-sm text-stone-700"><input type="checkbox" checked={showOrderSubmit} onChange={(event) => { setShowOrderSubmit(event.target.checked); setDraftDirty(true); }} /> Show customer order submit button</label>
             <p className="text-xs text-stone-500">Last saved: {content ? new Date(content.updatedAt).toLocaleString() : "-"}</p>
           </section>
           <section id="catalog-json" className="scroll-mt-28 rounded-2xl border border-stone-200 bg-white p-6">

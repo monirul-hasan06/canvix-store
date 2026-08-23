@@ -15,7 +15,7 @@ export function CheckoutPage() {
   const { slug } = useParams();
   const { t, loc } = useLanguage();
   const navigate = useNavigate();
-  const { books, categories, paymentMethods } = useContent();
+  const { books, categories, paymentMethods, showOrderSubmit } = useContent();
   const visibleBooks = books.filter((entry) => entry.visible !== false);
   const book = slug ? getBookBySlug(slug, visibleBooks) : undefined;
 
@@ -271,9 +271,9 @@ export function CheckoutPage() {
               {formError ? <p className="text-sm text-red-800">{formError}</p> : null}
 
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Button type="submit" className="w-full sm:w-auto" disabled={submitting}>
+                {showOrderSubmit ? <Button type="submit" className="w-full sm:w-auto" disabled={submitting}>
                   {submitting ? t("submitting") : t("submitOrder")}
-                </Button>
+                </Button> : null}
                 <Button type="button" variant="secondary" className="w-full border-green-600 text-green-700 hover:bg-green-50 sm:w-auto" onClick={sendToWhatsApp} disabled={submitting}>
                   {t("sendWhatsApp")}
                 </Button>

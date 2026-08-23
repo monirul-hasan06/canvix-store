@@ -15,6 +15,7 @@ export type ContentStore = {
   categories: Category[];
   paymentMethods: PaymentOption[];
   showCategories: boolean;
+  showOrderSubmit: boolean;
   siteCopy: SiteCopy;
 };
 
@@ -38,6 +39,7 @@ const initialStore = (): ContentStore => ({
   ],
   paymentMethods: DEFAULT_PAYMENT_METHODS,
   showCategories: true,
+  showOrderSubmit: true,
   siteCopy: {},
 });
 
@@ -74,7 +76,7 @@ function normalizeContent(parsed: ContentStore): ContentStore {
   if (!paymentMethods.length) throw new Error("Invalid payment methods");
   const categories = parsed.categories.map((category) => ({ ...category, visible: category.visible !== false }));
   const books = parsed.books.map((book) => ({ ...book, visible: book.visible !== false }));
-  return { ...parsed, books, categories, paymentMethods, siteCopy: parsed.siteCopy || {}, showCategories: parsed.showCategories !== false };
+  return { ...parsed, books, categories, paymentMethods, siteCopy: parsed.siteCopy || {}, showCategories: parsed.showCategories !== false, showOrderSubmit: parsed.showOrderSubmit !== false };
 }
 
 export function validateBook(value: unknown): value is Book {
