@@ -1,4 +1,5 @@
 // import { Seo } from "../components/Seo";
+import { Seo } from "../components/Seo";
 import { useLanguage } from "../i18n/LanguageContext";
 
 export function ContactPage() {
@@ -10,7 +11,9 @@ export function ContactPage() {
 
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="max-w-2xl">
-          <h1 className="font-serif text-4xl">{t("navContact")}</h1>
+          <h1 className="font-serif text-4xl">
+            {t("navContact")}
+          </h1>
 
           <p className="mt-3 text-stone-600">
             {t("contactIntro")}
@@ -22,7 +25,9 @@ export function ContactPage() {
             </p>
 
             <a
-              href="mailto:dev.get.in.touch@gmail.com"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=dev.get.in.touch@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-2 inline-block text-lg font-medium text-stone-900 underline decoration-stone-300 underline-offset-4 transition hover:decoration-stone-900"
             >
               dev.get.in.touch@gmail.com
