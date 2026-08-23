@@ -257,7 +257,7 @@ export const dictionary = {
     seoFaq: "Answers about payment, delivery, and manual verification.",
     seoContact: "Contact Canvix Store.",
     seoHow: "How buying a book and receiving a PDF by email works at Canvix Store.",
-    seoCheckout: "Send bKash or Rocket payment and submit your order form.",
+    seoCheckout: "Send payment in or Rocket payment and submit your order form.",
     seoSuccess: "Your Canvix Store order was submitted.",
   },
 } as const;
