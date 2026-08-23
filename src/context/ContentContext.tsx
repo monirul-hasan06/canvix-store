@@ -14,6 +14,9 @@ type Content = {
   paymentMethods: PaymentOption[];
   showCategories: boolean;
   showOrderSubmit: boolean;
+  showWhatsAppSubmit: boolean;
+  showGmailSubmit: boolean;
+  orderEmail: string;
   siteCopy: SiteCopy;
 };
 
@@ -37,6 +40,9 @@ const fallbackContent: Content = {
   paymentMethods: DEFAULT_PAYMENT_METHODS,
   showCategories: true,
   showOrderSubmit: true,
+  showWhatsAppSubmit: true,
+  showGmailSubmit: true,
+  orderEmail: "",
   siteCopy: defaultSiteCopy,
 };
 
@@ -50,7 +56,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       .then((response) => (response.ok ? response.json() : Promise.reject(new Error("Content unavailable"))))
       .then((data: Content & { paymentNumbers?: Record<string, string>; siteCopy?: SiteCopy }) => {
         const paymentMethods = data.paymentMethods?.length ? data.paymentMethods : Object.entries(data.paymentNumbers || {}).map(([id, number]) => ({ id, name: id === "bkash" ? "bKash" : id === "rocket" ? "Rocket" : id, number, enabled: true }));
-        setContent({ ...data, paymentMethods, showOrderSubmit: data.showOrderSubmit !== false, siteCopy: { ...defaultSiteCopy, ...(data.siteCopy || {}) } });
+        setContent({ ...data, paymentMethods, orderEmail: data.orderEmail || "", showOrderSubmit: data.showOrderSubmit !== false, showWhatsAppSubmit: data.showWhatsAppSubmit !== false, showGmailSubmit: data.showGmailSubmit !== false, siteCopy: { ...defaultSiteCopy, ...(data.siteCopy || {}) } });
       })
       .catch(() => undefined);
   }, []);

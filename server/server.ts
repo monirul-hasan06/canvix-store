@@ -17,7 +17,7 @@ const sessionSecret = process.env.SESSION_SECRET;
 app.use(express.json({ limit: "8mb" }));
 app.get("/api/content", async (_req, res) => {
   res.setHeader("Cache-Control", "no-store, max-age=0");
-  res.json(await loadContent());
+  res.json({ ...(await loadContent()), orderEmail: orderRecipient || "" });
 });
 
 const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standardHeaders: false, legacyHeaders: false });
@@ -67,8 +67,8 @@ app.get("/api/admin/session", (req, res) => res.json({ authenticated: isAdmin(re
 
 app.put("/api/admin/content", async (req, res) => {
   if (!isAdmin(req)) return res.status(401).json({ error: "Authentication required." });
-  const incoming = req.body as { version?: unknown; books?: unknown; categories?: unknown; paymentMethods?: unknown; showCategories?: unknown; showOrderSubmit?: unknown; siteCopy?: unknown };
-  if (!Number.isInteger(incoming.version) || !Array.isArray(incoming.books) || !Array.isArray(incoming.categories) || !Array.isArray(incoming.paymentMethods) || !incoming.siteCopy || typeof incoming.siteCopy !== "object" || typeof incoming.showCategories !== "boolean" || typeof incoming.showOrderSubmit !== "boolean") {
+  const incoming = req.body as { version?: unknown; books?: unknown; categories?: unknown; paymentMethods?: unknown; showCategories?: unknown; showOrderSubmit?: unknown; showWhatsAppSubmit?: unknown; showGmailSubmit?: unknown; siteCopy?: unknown };
+  if (!Number.isInteger(incoming.version) || !Array.isArray(incoming.books) || !Array.isArray(incoming.categories) || !Array.isArray(incoming.paymentMethods) || !incoming.siteCopy || typeof incoming.siteCopy !== "object" || typeof incoming.showCategories !== "boolean" || typeof incoming.showOrderSubmit !== "boolean" || typeof incoming.showWhatsAppSubmit !== "boolean" || typeof incoming.showGmailSubmit !== "boolean") {
     return res.status(400).json({ error: "Invalid content payload." });
   }
   const current = await loadContent();
@@ -90,6 +90,8 @@ app.put("/api/admin/content", async (req, res) => {
     paymentMethods: paymentMethods.map((method) => ({ id: String(method.id).trim().toLowerCase(), name: String(method.name).trim().slice(0, 80), number: String(method.number), enabled: method.enabled === true })),
     showCategories: incoming.showCategories,
     showOrderSubmit: incoming.showOrderSubmit,
+    showWhatsAppSubmit: incoming.showWhatsAppSubmit,
+    showGmailSubmit: incoming.showGmailSubmit,
     siteCopy: Object.fromEntries(Object.entries(incoming.siteCopy as Record<string, unknown>).filter(([key, value]) => /^[a-zA-Z0-9]+$/.test(key) && value && typeof value === "object").map(([key, value]) => { const copy = value as { bn?: unknown; en?: unknown }; return [key, { bn: String(copy.bn || "").slice(0, 4000), en: String(copy.en || "").slice(0, 4000) }]; })),
   };
   await saveContent(next);

@@ -15,7 +15,7 @@ export function CheckoutPage() {
   const { slug } = useParams();
   const { t, loc } = useLanguage();
   const navigate = useNavigate();
-  const { books, categories, paymentMethods, showOrderSubmit } = useContent();
+  const { books, categories, paymentMethods, showOrderSubmit, showWhatsAppSubmit, showGmailSubmit, orderEmail } = useContent();
   const visibleBooks = books.filter((entry) => entry.visible !== false);
   const book = slug ? getBookBySlug(slug, visibleBooks) : undefined;
 
@@ -130,6 +130,24 @@ export function CheckoutPage() {
       `Message: ${message.trim() || "None"}`,
     ].join("\n");
     window.open(`https://wa.me/8801410296217?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+  }
+
+  function sendToGmail() {
+    setFormError("");
+    if (!validate() || !book || !orderEmail) return;
+    const paymentName = paymentMethods.find((payment) => payment.id === method)?.name || method;
+    const body = [
+      "Canvix Store Order",
+      `Book: ${book.title.en}`,
+      `Name: ${name.trim()}`,
+      `Gmail: ${email.trim()}`,
+      `Payment method: ${paymentName}`,
+      `Sender mobile: ${sender.trim()}`,
+      `Transaction ID: ${trx.trim()}`,
+      `Amount: BDT ${Number(amount)}`,
+      `Message: ${message.trim() || "None"}`,
+    ].join("\n");
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(orderEmail)}&su=${encodeURIComponent(`Canvix Store Order - ${book.title.en}`)}&body=${encodeURIComponent(body)}`, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -274,9 +292,12 @@ export function CheckoutPage() {
                 {showOrderSubmit ? <Button type="submit" className="w-full sm:w-auto" disabled={submitting}>
                   {submitting ? t("submitting") : t("submitOrder")}
                 </Button> : null}
-                <Button type="button" variant="secondary" className="w-full border-green-600 text-green-700 hover:bg-green-50 sm:w-auto" onClick={sendToWhatsApp} disabled={submitting}>
+                {showGmailSubmit ? <Button type="button" variant="secondary" className="w-full border-red-600 text-red-700 hover:bg-red-50 sm:w-auto" onClick={sendToGmail} disabled={submitting || !orderEmail}>
+                  {t("sendGmail")}
+                </Button> : null}
+                {showWhatsAppSubmit ? <Button type="button" variant="secondary" className="w-full border-green-600 text-green-700 hover:bg-green-50 sm:w-auto" onClick={sendToWhatsApp} disabled={submitting}>
                   {t("sendWhatsApp")}
-                </Button>
+                </Button> : null}
               </div>
             </form>
           </div>
