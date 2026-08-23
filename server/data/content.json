@@ -566,7 +566,7 @@
       "en": "Order ID"
     },
     "contactIntro": {
-      "bn": "অর্ডার বা ক্যাটাগরি নিয়ে প্রশ্ন থাকলে লিখুন। পিডিএফ এই ফর্ম দিয়ে যায় না—কেবল কেনাকাটার ফর্মের মাধ্যমে অর্ডার হয়।",
+      "bn": "অর্ডার বা ক্যাটাগরি নিয়ে প্রশ্ন থাকলে লিখুন। পিডিএফ/অর্ডার এই ফর্ম দিয়ে যায় না—কেবল কেনাকাটার ফর্মের মাধ্যমে অর্ডার হয়।",
       "en": "Questions about an order or the catalog? This form does not deliver PDFs — use Buy Now to place an order."
     },
     "yourMessage": {
