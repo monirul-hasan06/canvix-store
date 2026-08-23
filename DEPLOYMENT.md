@@ -33,7 +33,8 @@ The server accepts `MAIL_HOST` and `ORDER_RECIPIENT`. It also temporarily accept
 
 - Import the repository.
 - The `netlify.toml` file supplies the build command, `dist` publish directory, function directory, API redirect, and SPA fallback.
-- Add the environment variables in Site configuration > Environment variables.
+- Netlify uses Node 20 for the build and functions.
+- Add the environment variables in Site configuration > Environment variables. Netlify does not import the local `.env` file because it is intentionally ignored by Git.
 - Deploy. `netlify/functions/api.ts` handles the `/api/*` routes.
 
 ## Persistent data requirement

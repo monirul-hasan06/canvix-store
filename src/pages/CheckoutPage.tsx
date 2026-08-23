@@ -288,17 +288,14 @@ export function CheckoutPage() {
 
               {formError ? <p className="text-sm text-red-800">{formError}</p> : null}
 
-              <div className="grid gap-3 sm:grid-cols-3">
-                {showOrderSubmit ? <Button type="submit" className="min-h-12 w-full rounded-xl bg-amber-800 px-4 text-left shadow-sm hover:bg-amber-900 sm:justify-start" disabled={submitting}>
-                  <span aria-hidden className="text-lg">✓</span>
-                  <span>{submitting ? t("submitting") : t("submitOrder")}</span>
+              <div className="flex flex-col gap-2 border-t border-stone-200 pt-5 sm:flex-row sm:flex-wrap">
+                {showOrderSubmit ? <Button type="submit" className="w-full rounded-lg px-4 sm:w-auto" disabled={submitting}>
+                  {submitting ? t("submitting") : t("submitOrder")}
                 </Button> : null}
-                {showGmailSubmit ? <Button type="button" variant="secondary" title={!orderEmail ? "Gmail submission is not configured." : undefined} className="min-h-12 w-full rounded-xl border-red-200 bg-red-50 px-4 text-left text-red-800 hover:border-red-300 hover:bg-red-100 sm:justify-start" onClick={sendToGmail} disabled={submitting || !orderEmail}>
-                  <span aria-hidden className="text-lg">@</span>
-                  <span>{t("sendGmail")}</span>
+                {showGmailSubmit ? <Button type="button" variant="secondary" title={!orderEmail ? "Gmail submission is not configured." : undefined} className="w-full rounded-lg border-red-200 text-red-800 hover:bg-red-50 sm:w-auto" onClick={sendToGmail} disabled={submitting || !orderEmail}>
+                  {t("sendGmail")}
                 </Button> : null}
-                {showWhatsAppSubmit ? <Button type="button" variant="secondary" className="min-h-12 w-full rounded-xl border-green-200 bg-green-50 px-4 text-left text-green-800 hover:border-green-300 hover:bg-green-100 sm:justify-start" onClick={sendToWhatsApp} disabled={submitting}>
-                  <span aria-hidden className="text-lg">↗</span>
+                {showWhatsAppSubmit ? <Button type="button" variant="secondary" className="w-full rounded-lg border-green-200 text-green-800 hover:bg-green-50 sm:w-auto" onClick={sendToWhatsApp} disabled={submitting}>
                   {t("sendWhatsApp")}
                 </Button> : null}
               </div>
