@@ -38,7 +38,7 @@ The server accepts `MAIL_HOST` and `ORDER_RECIPIENT`. It also temporarily accept
 
 On Netlify, catalog edits are stored in Netlify Blobs (`canvix-content`), so updates remain available across function instances and deployments. Netlify Blobs is enabled automatically for the site’s functions; no client-side environment variable is needed.
 
-Cover uploads still use `public/covers`, so use durable object storage for production cover uploads or commit uploaded covers to the repository.
+Cover uploads are written to `public/covers` for local development. Vercel function filesystems are ephemeral, so production uploads must be committed to the repository or moved to durable object storage before they are used in the catalog. The included `book1_cover.png` is deployed as a static asset.
 
 ## Local development
 

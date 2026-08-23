@@ -29,7 +29,7 @@ export const books: Book[] = [
       en: "How to Be an Alpha Male",
     },
     author: { bn: "ক্যানভিক্স প্রেস", en: "Canvix Press" },
-    coverImage: "/covers/how-to-be-an-alpha-male.svg",
+    coverImage: "/covers/book1_cover.png",
     shortDescription: {
       bn: "আত্মবিশ্বাস, উপস্থিতি ও দৈনন্দিন নেতৃত্ব নিয়ে একটি সংক্ষিপ্ত ডিজিটাল গাইড।",
       en: "A concise digital guide to confidence, presence, and everyday leadership.",

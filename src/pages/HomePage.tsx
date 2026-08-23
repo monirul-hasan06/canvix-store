@@ -48,7 +48,7 @@ export function HomePage() {
         <div className="relative mx-auto w-full max-w-sm">
           <div className="absolute -inset-4 rounded-[2rem] bg-amber-800/10" aria-hidden />
           <img
-            src={visibleBooks[0]?.coverImage || "/covers/how-to-be-an-alpha-male.svg"}
+            src={visibleBooks[0]?.coverImage || "/covers/book1_cover.png"}
             alt={visibleBooks[0] ? loc(visibleBooks[0].title) : STORE_NAME}
             className="relative w-full rounded-3xl border border-stone-200 shadow-lg"
           />
