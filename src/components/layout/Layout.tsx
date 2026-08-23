@@ -1,10 +1,11 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 
 export function Layout() {
   const { t } = useLanguage();
+  const location = useLocation();
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -16,7 +17,9 @@ export function Layout() {
       </a>
       <Header />
       <main id="main" className="flex-1">
-        <Outlet />
+        <div key={location.key} className="page-rise">
+          <Outlet />
+        </div>
       </main>
       <Footer />
     </div>
