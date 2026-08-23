@@ -57,7 +57,7 @@ export async function loadContent(): Promise<ContentStore> {
     return normalizeContent(parsed);
   } catch {
     const seeded = initialStore();
-    await saveContent(seeded);
+    if (!process.env.VERCEL) await saveContent(seeded);
     return seeded;
   }
 }
