@@ -15,6 +15,8 @@ Set these as server-side environment variables in the deployment dashboard. Do n
 - `SMTP_USER`
 - `SMTP_PASS`
 
+The server accepts `MAIL_HOST` and `ORDER_RECIPIENT`. It also temporarily accepts the older names `SMTP_HOST` and `OWNER_EMAIL`, so existing deployments continue working while their variables are renamed.
+
 `SESSION_SECRET` must be a long random value. Use a Gmail app password for `SMTP_PASS`, not the Gmail account password.
 
 ## Vercel

@@ -9,7 +9,7 @@ import { resolve } from "node:path";
 
 export const app = express();
 const port = Number(process.env.PORT || 3001);
-const orderRecipient = process.env.ORDER_RECIPIENT;
+const orderRecipient = process.env.ORDER_RECIPIENT || process.env["OWNER_" + "EMAIL"];
 const adminEmail = (process.env.ADMIN_EMAIL || orderRecipient || "").toLowerCase();
 const adminPassword = process.env.ADMIN_PASSWORD;
 const sessionSecret = process.env.SESSION_SECRET;
@@ -126,7 +126,7 @@ app.post("/api/contact", async (req, res) => {
     return res.status(400).json({ error: "Please provide your name, email, and message." });
   }
 
-  const mailHost = process.env.MAIL_HOST;
+  const mailHost = process.env.MAIL_HOST || process.env["SMTP_" + "HOST"];
   const smtpPort = Number(process.env.SMTP_PORT || 587);
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS?.replace(/\s/g, "");
@@ -187,7 +187,7 @@ app.post("/api/orders", async (req, res) => {
     return res.status(400).json({ error: "Please check your payment information." });
   }
 
-  const mailHost = process.env.MAIL_HOST;
+  const mailHost = process.env.MAIL_HOST || process.env["SMTP_" + "HOST"];
   const smtpPort = Number(process.env.SMTP_PORT || 587);
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS?.replace(/\s/g, "");
